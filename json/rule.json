@@ -1,0 +1,17 @@
+[
+    {
+        "key": "title",
+        "value": "連答付き5○2×クイズ",
+        "style": "string"
+    },
+    {
+        "key": "timeLimitMinute",
+        "value": 15,
+        "style": "number"
+    },
+    {
+        "key": "timeLimitSecond",
+        "value": 0,
+        "style": "number"
+    }
+]

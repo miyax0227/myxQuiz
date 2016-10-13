@@ -1,0 +1,289 @@
+.number {
+	text-align: right;
+}
+
+table.plaeyers {
+	width: 800px;
+}
+
+input#name {
+	width: 100px;
+}
+
+input#pref {
+	width: 80px;
+}
+
+input.number {
+	width: 65px;
+}
+
+select#status {
+	width: 100px;
+}
+
+tr.ng-enter {
+	-webkit-transition: 0.2s linear all; /* Safari/Chrome */
+	transition: 0.2s linear all; /* All other modern browsers and IE10+ */
+	opacity: 0;
+}
+
+tr.ng-enter.ng-enter-active {
+	opacity: 1;
+}
+
+tr.ng-leave {
+	-webkit-transition: 0.2s linear all; /* Safari/Chrome */
+	transition: 0.2s linear all; /* All other modern browsers and IE10+ */
+	opacity: 1;
+}
+
+tr.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+
+div.scoreBoard {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+div.title {
+	position: absolute;
+	top: 0px;
+	left: 25px;
+	font-size: 40px;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+}
+
+div.qCount {
+	position: absolute;
+	top: 45px;
+	left: 25px;
+	font-size: 30px;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+}
+
+hr.hr0 {
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	width: 740px;
+	border: 0;
+	height: 2px;
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+	background-image: -o-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+}
+
+div.player {
+	width: 200px;
+	height: 1000px;
+	transition: 1s;
+}
+
+div.player.ng-enter{
+	transition: 0s;
+}
+div.player.ng-leave{
+	transition: 0s;
+}
+
+div.player.ng-move{
+}
+
+
+div.player div.name {
+	position: absolute;
+	left: 0px;
+	top: 100px;
+	width: 50px;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: -24px;
+	font-size: 56px;
+	-webkit-writing-mode: vertical-rl;
+	-webkit-text-orientation: upright;
+	transform-origin: 0px 12px;
+	transform: translate(16px,-10px);
+}
+
+div.player div.pref {
+	position: absolute;
+	left: 0px;
+	top: 300px;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: 0px;
+	font-size: 24px;
+	transform-origin: 0px 0px;
+	transform: translate(5px,-5px);
+}
+
+div.player div.paperRank {
+	position: absolute;
+	left: 0px;
+	top: 75px;
+	width: 50px;
+	text-align: center;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: 0px;
+	font-size: 20px;
+	transform: translate(0px, 0px);
+}
+
+div.player div.o {
+	position: absolute;
+	left: -10px;
+	top: 15px;
+	width: 70px;
+	text-align: center;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: 0px;
+	font-size: 50px;
+	transform: translate(0px, 0px);
+}
+
+div.player div.x {
+	position: absolute;
+	left: -10px;
+	top: 315px;
+	width: 70px;
+	text-align: center;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: 0px;
+	font-size: 50px;
+	transform: translate(0px, 0px);
+}
+
+div.player div.status {
+	position: absolute;
+	left: 0px;
+	top: 100px;
+}
+
+div.player div.status img.win {
+	position: absolute;
+	left: -5px;
+	top: 25px;
+	width: 60px;
+	opacity: 0.9;
+}
+
+div.player div.status img.win.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0;
+	transform: scale(1.5,1.5);
+}
+
+div.player div.status img.win.ng-enter.ng-enter-active {
+	opacity: 0.9;
+	transform: scale(1,1);
+}
+
+div.player div.status img.lose {
+	position: absolute;
+	left: -12px;
+	top: 20px;
+	width: 75px;
+	opacity: 0.9;
+}
+
+div.player div.status img.lose.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0;
+	transform: scale(1.5,1.5) rotate(30deg);
+}
+
+div.player div.status img.lose.ng-enter.ng-enter-active {
+	opacity: 0.9;
+	transform: scale(1,1) rotate(0deg);
+}
+
+div.player div.status img.wait {
+	position: absolute;
+	left: -5px;
+	top: 38px;
+	width: 60px;
+	opacity: 0.9;
+}
+
+div.player div.status img.wait.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0;
+	transform: scale(1.5,1.5);
+}
+
+div.player div.status img.wait.ng-enter.ng-enter-active {
+	opacity: 0.9;
+	transform: scale(1,1);
+}
+
+div.player div.action_o {
+	position: absolute;
+	left: -5px;
+	top: 375px;
+}
+
+div.player div.action_x {
+	position: absolute;
+	left: 30px;
+	top: 375px;
+}
+
+div.player div.action_win {
+	position: absolute;
+	left: -5px;
+	top: 405px;
+}
+div.player div.action_lose {
+	position: absolute;
+	left: 15px;
+	top: 405px;
+}
+div.player div.action_wait {
+	position: absolute;
+	left: 35px;
+	top: 405px;
+}
+
+div.global_actions {
+	position: absolute;
+	left: 30px;
+	top: 550px;
+}
+
+hr.hr1 {
+	position: absolute;
+	top: 55px;
+	left: 0px;
+	width: 50px;
+	border: 0;
+	height: 2px;
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -o-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+}
+
+hr.hr2 {
+	position: absolute;
+	top: 305px;
+	left: 0px;
+	width: 50px;
+	border: 0;
+	height: 2px;
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -o-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+}
