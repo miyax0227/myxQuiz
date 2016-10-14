@@ -6,7 +6,7 @@ var app = angular.module(appName);
 /**********************************************************************
  * round - ラウンド特有のクイズのルール・画面操作の設定
  * @class
- * @namespace myxQuiz
+ * @static
  * @name round
  **********************************************************************/
 app.factory('round', ['qCommon',
@@ -61,7 +61,7 @@ function(qCommon) {
         player[record.key] = i;
       });
 
-
+      
     });
   }
 	
