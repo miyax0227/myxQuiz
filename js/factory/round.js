@@ -6,8 +6,8 @@ var app = angular.module(appName);
 /**********************************************************************
  * round - ラウンド特有のクイズのルール・画面操作の設定
  * @class
+ * @namespace myxQuiz
  * @name round
- * @memberOf angular-5o2x.js.factory
  **********************************************************************/
 app.factory('round', ['qCommon',
 function(qCommon) {
@@ -19,8 +19,9 @@ function(qCommon) {
   /**********************************************************************
    * judgement - 操作終了時等の勝敗判定
    * @instance
-   * @name judgement
-   * @memberOf angular-5o2x.js.factory.round
+   * @memberOf myxQuiz.js.factory.round
+   * @param {Array} players  - players
+   * @param {Object} header - header
    **********************************************************************/
   function judgement(players, header) {
     angular.forEach(players.filter(function(item) {
@@ -29,6 +30,7 @@ function(qCommon) {
     }), function(player, i) {
       /* win条件 */
       if (player.o >= 5) {
+    	
         win(player, players);
         player.o = 5;
       }
@@ -38,14 +40,14 @@ function(qCommon) {
       }
     });
   };
-
   round.judgement = judgement;
 
   /**********************************************************************
    * calc - 従属変数の計算をする
    * @instance
-   * @name calc
-   * @memberOf angular-5o2x.js.factory.round
+   * @memberOf myxQuiz.js.factory.round
+   * @param {Array} players - players
+   * @param {Object} items - items
    **********************************************************************/
   function calc(players, items) {
     angular.forEach(items.filter(function(item) {
@@ -62,7 +64,7 @@ function(qCommon) {
 
     });
   }
-
+	
   round.calc = calc;
 
   /**********************************************************************
@@ -82,6 +84,7 @@ function(qCommon) {
     action0 : function(player, players, header) {
       player.o++;
       header.qCount++;
+      
     }
   },
   /************************************************************
