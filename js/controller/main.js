@@ -9,8 +9,8 @@ var app = angular.module(appName);
  * @name main
  * @memberOf angular-5o2x.js.controller
  **********************************************************************/
-app.controller('main', ['$scope', '$localStorage', '$q', 'fileResource', 'qCommon', 'round','$window',
-function($scope, $localStorage, $q, fileResource, qCommon, round, $window) {
+app.controller('main', ['$scope', '$q', 'fileResource', 'qCommon', 'round','$window',
+function($scope, $q, fileResource, qCommon, round, $window) {
 
   /**********************************************************************
    * header.jsonに記載されたデフォルトのheaderを取得する
@@ -115,23 +115,12 @@ function($scope, $localStorage, $q, fileResource, qCommon, round, $window) {
     $scope.defaultHeader = strs[0];
     $scope.defaultRule = strs[1];
     $scope.items = strs[2];
-
-    //playersをlocalstrageにバインドする
-    $scope.$storage = $localStorage.$default({
-      history : [],
-      current : {
-        header : getDefaultHeader(),
-        players : []
-      },
-      rule : getDefaultRule()
-    });
+    $scope.current = strs[3];
 
     //履歴
-    $scope.history = $scope.$storage.history;
-    //現在の得点
-    $scope.current = $scope.$storage.current;
+    $scope.history = [];
     //ルール
-    $scope.rule = $scope.$storage.rule;
+    $scope.rule = getDefaultRule();
     //redo用の履歴
     $scope.redoHistory = [];
 

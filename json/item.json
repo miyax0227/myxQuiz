@@ -1,69 +1,73 @@
-[{
-  "key" : "entryNo",
-  "value" : null,
-  "style" : "number"
-}, {
-  "key" : "name",
-  "value" : "",
-  "style" : "string",
-  "css" : "name",
-  "vtrans" : 3.7
-}, {
-  "key" : "pref",
-  "value" : "",
-  "style" : "typeahead",
-  "option" : ["", "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"],
-  "css" : "pref",
-  "htrans" : 1.7
-}, {
-  "key" : "paperRank",
-  "value" : null,
-  "style" : "number",
-  "suffix" : "位",
-  "css" : "paperRank"
-}, {
-  "key" : "status",
-  "value" : "normal",
-  "style" : "select",
-  "option" : ["normal", "win", "lose", "absent", "wait"],
-  "css_img" : "status",
-  "css_img_file" : {
-    "win" : "win.png",
-    "lose" : "lose.png",
-    "wait" : "wait.png"
-  }
-}, {
-  "key" : "rank",
-  "value" : 0,
-  "style" : "number"
-}, {
-  "key" : "o",
-  "value" : 0,
-  "style" : "number",
-  "css" : "o"
-}, {
-  "key" : "x",
-  "value" : 0,
-  "style" : "number",
-  "css" : "x"
-}, {
-  "key" : "position",
-  "value" : 0,
-  "css" : "position",
-  "order" : []
-}, {
-  "key" : "priority",
-  "value" : 0,
-  "css" : "priority",
-  "order" : [{
-    "key" : "status",
-    "order" : "desc",
-    "alter" : ["win", 1, 0]
-  }, {
-    "key" : "o",
-    "order" : "desc"
-  }, {
-    "key" : "x",
-    "order" : "asc"
-  }]
-}]
+[
+	{
+		"key": "entryNo",
+		"value": null,
+		"style": "number"
+	}, {
+		"key": "name",
+		"value": "",
+		"style": "string",
+		"css": "name",
+		"vtrans": 3.7
+	}, {
+		"key": "pref",
+		"value": "",
+		"style": "typeahead",
+		"option": ["", "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"],
+		"css": "pref",
+		"htrans": 1.7
+	}, {
+		"key": "paperRank",
+		"value": null,
+		"style": "number",
+		"suffix": "位",
+		"css": "paperRank"
+	}, {
+		"key": "status",
+		"value": "normal",
+		"style": "select",
+		"option": ["normal", "win", "lose", "absent", "wait"],
+		"css_img": "status",
+		"css_img_file": {
+			"win": "win.png",
+			"lose": "lose.png",
+			"wait": "wait.png"
+		}
+	}, {
+		"key": "rank",
+		"value": 0,
+		"style": "number"
+	}, {
+		"key": "o",
+		"value": 0,
+		"style": "number",
+		"css": "o"
+	}, {
+		"key": "x",
+		"value": 0,
+		"style": "number",
+		"css": "x"
+	}, {
+		"key": "position",
+		"value": 0,
+		"css": "position",
+		"order": []
+	}, {
+		"key": "priority",
+		"value": 0,
+		"css": "priority",
+		"order": [
+			{
+				"key": "status",
+				"order": "desc",
+				"alter": ["win", 1, 0]
+			}, {
+				"key": "o",
+				"order": "desc"
+			}, {
+				"key": "x",
+				"order": "asc"
+			}
+		]
+	}
+]

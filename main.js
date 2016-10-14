@@ -24,7 +24,8 @@ app.on('ready', function() {
 	
   // メイン画面の表示。ウィンドウの幅、高さを指定できる
   mainWindow = new BrowserWindow({width: 800, height: 600});
-  mainWindow.toggleDevTools();
+  // デバッグ時
+  // mainWindow.toggleDevTools();
   mainWindow.loadURL('file://' + __dirname + '/board.html');
 
   // ウィンドウが閉じられたらアプリも終了
