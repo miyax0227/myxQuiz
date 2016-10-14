@@ -17,7 +17,7 @@ function(qCommon) {
   var lose = qCommon.lose;
 
   /**********************************************************************
-   * judgement - 操作終了時等に勝敗を判定する
+   * judgement - 操作終了時等の勝敗判定
    * @instance
    * @name judgement
    * @memberOf angular-5o2x.js.factory.round
