@@ -1,6 +1,6 @@
 {
-  "name": "helloworld",
-  "version": "1.0.0",
+  "name": "myxQuiz",
+  "version": "0.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -8,8 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "electron-json-storage": "^2.0.0"
-  }
+  "license": "ISC"
 }

@@ -4,8 +4,8 @@
  * app - Angularモジュール本体
  ******************************************************************************/
 var appName = "myxQuiz";
-var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate",
-	"ngResource" ]);
+var app = angular
+	.module(appName, [ "ui.bootstrap", "ngAnimate", "ngResource" ]);
 
 /*******************************************************************************
  * fileResource - 全てのjsonファイルの読込の同期をとるためのfactory

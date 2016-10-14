@@ -1,8 +1,14 @@
+@font-face {
+  font-family: "MigMix 1M";
+  src: url(../font/migmix-1m-regular.ttf) ;
+  src: url(../font/migmix-1m-bold.ttf);
+}
+
 .number {
 	text-align: right;
 }
 
-table.plaeyers {
+table.players {
 	width: 800px;
 }
 
