@@ -14,11 +14,12 @@ app.factory('fileResource', function($resource) {
   // 読み込むjsonファイルを列挙
   return [
   // header.json - 履歴情報のうち、playerに依らない全体的な情報の定義
-  $resource('./json/header.json')
+  $resource('./json/header.json').query()
   // rule.json - クイズのルールの中で、可変な値の設定
-  , $resource('./json/rule.json')
+  , $resource('./json/rule.json').query()
   // item.json - プレイヤーの属性の定義
-  , $resource('./json/item.json')
+  , $resource('./json/item.json').query()
   // name.json - 名前・初期値の定義
-  , $resource('./json/name.json') ];
+   , $resource('./json/name.json').get()
+  ];
 });

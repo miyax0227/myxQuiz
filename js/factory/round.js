@@ -5,6 +5,8 @@ var app = angular.module(appName);
 
 /*******************************************************************************
  * round - ラウンド特有のクイズのルール・画面操作の設定
+ * @class
+ * @name round
  ******************************************************************************/
 app
 	.factory('round',
@@ -18,11 +20,8 @@ app
 
 			  /*****************************************************************
 			   * judgement - 操作終了時等の勝敗判定
-			   * 
-			   * @param {Array}
-			   *            players - players
-			   * @param {Object}
-			   *            header - header
+			   * @param {Array} players - players
+			   * @param {Object} header - header
 			   ****************************************************************/
 			  function judgement(players, header) {
 				angular.forEach(players.filter(function(item) {
@@ -47,11 +46,8 @@ app
 
 			  /*****************************************************************
 			   * calc - 従属変数の計算をする
-			   * 
-			   * @param {Array}
-			   *            players - players
-			   * @param {Object}
-			   *            items - items
+			   * @param {Array} players - players
+			   * @param {Object} items - items
 			   ****************************************************************/
 			  function calc(players, items) {
 				angular.forEach(items.filter(function(item) {
@@ -243,27 +239,21 @@ app
 				 * action : function() { header.orderMode = "priority"; } }, {
 				 * name : "judge-upper", button_css : "btn btn-danger", enable :
 				 * function() { return (!header.playoff); }, action : function() {
-				 * var priority = "priority"; var borderPlayers = [];
-				 * 
-				 * var keyPriority = Math.min.apply(null,
+				 * var priority = "priority"; var borderPlayers = []; var
+				 * keyPriority = Math.min.apply(null,
 				 * players.filter(function(player) { return (["normal", "wait",
 				 * "absent"].indexOf(player.status) >= 0);
-				 * }).map(function(player) { return player[priority]; }));
-				 * 
-				 * if (keyPriority === null) { return; }
-				 * 
-				 * var keyPriorityPlayer = players.filter(function(player) {
-				 * return (player[priority] == keyPriority); })[0];
-				 * 
-				 * borderPlayers = players.filter(function(player) { return
-				 * (["normal", "wait", "absent"].indexOf(player.status) >= 0);
+				 * }).map(function(player) { return player[priority]; })); if
+				 * (keyPriority === null) { return; } var keyPriorityPlayer =
+				 * players.filter(function(player) { return (player[priority] ==
+				 * keyPriority); })[0]; borderPlayers =
+				 * players.filter(function(player) { return (["normal", "wait",
+				 * "absent"].indexOf(player.status) >= 0);
 				 * }).filter(function(player) { return
 				 * (qCommon.playerSortOn($scope.items.filter(function(item) {
 				 * return (item.key == priority);
 				 * })[0].order,false,$scope)(keyPriorityPlayer, player) == 0);
-				 * });
-				 * 
-				 * if (borderPlayers.length == 1) { win(borderPlayers[0]);
+				 * }); if (borderPlayers.length == 1) { win(borderPlayers[0]);
 				 * qCommon.createHist($scope); } else if (borderPlayers.length >=
 				 * 2) { players.filter(function(player) { return (["normal",
 				 * "wait", "absent"].indexOf(player.status) >= 0);
@@ -272,27 +262,20 @@ app
 				 * qCommon.createHist($scope); } } }, { name : "judge-lower",
 				 * button_css : "btn btn-danger", enable : function() { return
 				 * (!header.playoff); }, action : function() { var priority =
-				 * "priority"; var borderPlayers = [];
-				 * 
-				 * var keyPriority = Math.max.apply(null,
+				 * "priority"; var borderPlayers = []; var keyPriority =
+				 * Math.max.apply(null, players.filter(function(player) { return
+				 * (["normal", "wait", "absent"].indexOf(player.status) >= 0);
+				 * }).map(function(player) { return player[priority]; })); if
+				 * (keyPriority === null) { return; } var keyPriorityPlayer =
+				 * players.filter(function(player) { return (player[priority] ==
+				 * keyPriority); })[0]; borderPlayers =
 				 * players.filter(function(player) { return (["normal", "wait",
 				 * "absent"].indexOf(player.status) >= 0);
-				 * }).map(function(player) { return player[priority]; }));
-				 * 
-				 * if (keyPriority === null) { return; }
-				 * 
-				 * var keyPriorityPlayer = players.filter(function(player) {
-				 * return (player[priority] == keyPriority); })[0];
-				 * 
-				 * borderPlayers = players.filter(function(player) { return
-				 * (["normal", "wait", "absent"].indexOf(player.status) >= 0);
 				 * }).filter(function(player) { return
 				 * (qCommon.playerSortOn($scope.items.filter(function(item) {
 				 * return (item.key == priority);
 				 * })[0].order,false,$scope)(keyPriorityPlayer, player) == 0);
-				 * });
-				 * 
-				 * if (borderPlayers.length == 1) { lose(borderPlayers[0]);
+				 * }); if (borderPlayers.length == 1) { lose(borderPlayers[0]);
 				 * qCommon.createHist($scope); } else if (borderPlayers.length >=
 				 * 2) { players.filter(function(player) { return (["normal",
 				 * "wait", "absent"].indexOf(player.status) >= 0);
