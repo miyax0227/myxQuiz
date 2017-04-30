@@ -5,6 +5,7 @@ var app = angular.module(appName);
 
 /*******************************************************************************
  * qCommon - クイズのルールに依存しない共通関数をまとめたservice
+ * 
  * @class
  * @name qCommon
  ******************************************************************************/
@@ -14,7 +15,9 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * ログ文字列を生成する
-   * @param {Object} scope $scope
+   * 
+   * @param {Object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.getLog = function(scope) {
 	var logArray = [];
@@ -36,7 +39,10 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * 履歴を作成する
-   * @param {Object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {Object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.createHist = function(scope) {
 	// historyの末尾にcurrentのコピーを追加
@@ -48,13 +54,17 @@ app.service('qCommon', [ '$modal', function($modal) {
 	// ログ出力
 	var fs = require('fs');
 	fs.appendFile('test.txt', qCommonService.getLog(scope) + "\n");
-	fs.writeFile('current.json', angular.toJson(scope.current));
+	fs.writeFile('current.json',angular.toJson(scope.current));
   };
 
   /*****************************************************************************
    * playerを追加する
-   * @param {number} index - 追加する位置
-   * @param {Object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {number}
+   *            index - 追加する位置
+   * @param {Object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.addPlayer = function(index, scope) {
 	var player = {};
@@ -68,8 +78,12 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * playerを勝抜処理する
-   * @param {Object} player - 勝ち抜けたプレイヤー
-   * @param {Object} players - players
+   * 
+   * @memberOf qCommon
+   * @param {Object}
+   *            player - 勝ち抜けたプレイヤー
+   * @param {Object}
+   *            players - players
    ****************************************************************************/
   qCommonService.win = function(player, players) {
 	/* rank算出 */
@@ -83,8 +97,12 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * playerを失格処理する
-   * @param {Object} player - 勝ち抜けたプレイヤー
-   * @param {Object} players - players
+   * 
+   * @memberOf qCommon
+   * @param {Object}
+   *            player - 勝ち抜けたプレイヤー
+   * @param {Object}
+   *            players - players
    ****************************************************************************/
   qCommonService.lose = function(player, players) {
 	/* rank算出 */
@@ -98,8 +116,12 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * playerを削除する
-   * @param {number} index - 削除する位置
-   * @param {Object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {number}
+   *            index - 削除する位置
+   * @param {Object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.removePlayer = function(index, scope) {
 	// players内のindexで指定した位置のplayerを削除
@@ -108,8 +130,13 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * 値の置換をする
-   * @param {string,number} a - 元の文字列/数値
-   * @param {Array. <string,number>} alter - (置換前文字列/数値, 置換後文字列/数値)*n
+   * 
+   * @namespace myxQuiz
+   * @memberof qCommon
+   * @param {string,number}
+   *            a - 元の文字列/数値
+   * @param {Array.
+   *            <string,number>} alter - (置換前文字列/数値, 置換後文字列/数値)*n
    *            [,elseの場合の文字列/数値]
    * @return {string,number} 置換後の文字列/数値
    ****************************************************************************/
@@ -137,10 +164,14 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * playerのソート用関数
-   * @param {Array. <object>} order - key:比較対象属性名 order:昇順(asc)/降順(desc)
-   *            alter:置換文字列
-   * @param {boolean} position - 比較結果が同等の場合、初期位置で比較を行うか
-   * @param {object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {Array.
+   *            <object>} order - key:比較対象属性名 order:昇順(asc)/降順(desc) alter:置換文字列
+   * @param {boolean}
+   *            position - 比較結果が同等の場合、初期位置で比較を行うか
+   * @param {object}
+   *            scope - $scope
    * @return {function} 評価関数
    ****************************************************************************/
   qCommonService.playerSortOn = function(order, position, players) {
@@ -199,8 +230,12 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * 現在の状態を履歴に反映する（undo,redoで使用）
-   * @param {object} hist - 反映したい1履歴
-   * @param {object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {object}
+   *            hist - 反映したい1履歴
+   * @param {object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.refreshCurrent = function(hist, scope) {
 	// headerの中身を入替
@@ -232,7 +267,10 @@ app.service('qCommon', [ '$modal', function($modal) {
 
   /*****************************************************************************
    * 得点の編集画面を表示する
-   * @param {object} scope - $scope
+   * 
+   * @memberOf qCommon
+   * @param {object}
+   *            scope - $scope
    ****************************************************************************/
   qCommonService.editCurrent = function(scope) {
 	var modal = $modal.open({
