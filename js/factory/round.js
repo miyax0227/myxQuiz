@@ -14,11 +14,17 @@ app.factory('round', [
 	  var round = {};
 	  var win = qCommon.win;
 	  var lose = qCommon.lose;
-	  round.judgement = rule.judgement;
 	  round.calc = rule.calc;
 	  round.actions = rule.actions;
 	  round.global_actions = rule.global_actions;
 
+	  function judgement(players, header) {
+		return rule.judgement(players,header);
+	  }
+
+	  function calc(players, items) {
+		return rule.calc(players,items);
+	  }
 	  /*************************************************************************
 	   * actions - プレイヤー毎に設定する操作の設定
 	   ************************************************************************/

@@ -80,7 +80,7 @@ app.factory('rule', [
 		  return (player.status == "normal" && !header.playoff);
 		},
 		action0 : function(player, players, header) {
-		  player.o++;
+		  player.o = player.o + 2;
 		  header.qCount++;
 
 		}
