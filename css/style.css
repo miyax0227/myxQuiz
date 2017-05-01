@@ -130,6 +130,9 @@ div.player div.pref {
 }
 
 div.player div.paperRank {
+	-webkit-text-stroke-color: #FFFFFF;
+	-webkit-text-stroke-width: 1px;
+	background-color : #000000
 	position: absolute;
 	left: 0px;
 	top: 75px;
