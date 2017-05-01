@@ -80,9 +80,6 @@ hr.hr0 {
 	border: 0;
 	height: 2px;
 	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
-	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
-	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
-	background-image: -o-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
 }
 
 div.player {
@@ -130,12 +127,11 @@ div.player div.pref {
 }
 
 div.player div.paperRank {
-	-webkit-text-stroke-color: #FFFFFF;
+	-webkit-text-stroke-color: #000000;
 	-webkit-text-stroke-width: 1px;
-	background-color : #000000
-	
+	-webkit-text-fill-color: #FFFFFF;
 	position: absolute;
-	left: -100px;
+	left: 0px;
 	top: 75px;
 	width: 50px;
 	text-align: center;

@@ -21,7 +21,25 @@
 		"value": null,
 		"style": "number",
 		"suffix": "位",
-		"css": "paperRank"
+		"css": "paperRank",
+		"rankColor": [
+			{
+				"maxRank": 4,
+				"color": "red"
+			}, {
+				"maxRank": 12,
+				"color": "blue"
+			}, {
+				"maxRank": 24,
+				"color": "yellow"
+			}, {
+				"maxRank": 48,
+				"color": "green"
+			}, {
+				"maxRank": 1000,
+				"color": "gray"
+			}
+		]
 	}, {
 		"key": "status",
 		"value": "normal",
