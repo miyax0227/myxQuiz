@@ -4,6 +4,10 @@
   src: url(../font/migmix-1m-bold.ttf);
 }
 
+body {
+	overflow: hidden;
+}
+
 .number {
 	text-align: right;
 }

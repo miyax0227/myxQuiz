@@ -1,17 +1,23 @@
 [
-    {
-        "key": "title",
-        "value": "7○3×クイズ",
-        "style": "string"
-    },
-    {
-        "key": "timeLimitMinute",
-        "value": 15,
-        "style": "number"
-    },
-    {
-        "key": "timeLimitSecond",
-        "value": 0,
-        "style": "number"
-    }
+	{
+		"key": "title",
+		"value": "7○3×クイズ",
+		"style": "string"
+	}, {
+		"key": "winningPoint",
+		"value": 7,
+		"style": "number"
+	}, {
+		"key": "losingPoint",
+		"value": 3,
+		"style": "number"
+	}, {
+		"key": "defaultName",
+		"value": "no name??",
+		"style": "string"
+	}, {
+		"key": "qAddCount",
+		"value": 3,
+		"style": "number"
+	}
 ]

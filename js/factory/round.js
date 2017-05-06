@@ -14,16 +14,32 @@ app.factory('round', [
 	  var round = {};
 	  var win = qCommon.win;
 	  var lose = qCommon.lose;
-	  round.calc = rule.calc;
+	  round.calc = calc;
 	  round.actions = rule.actions;
 	  round.global_actions = rule.global_actions;
+	  round.items = rule.items;
+	  round.head = rule.head;
 
-	  function judgement(players, header) {
-		return rule.judgement(players,header);
+	  function judgement(players, header, property) {
+		return rule.judgement(players, header, property);
 	  }
 
-	  function calc(players, items) {
-		return rule.calc(players,items);
+	  function calc(players, items, property) {
+		angular.forEach(items.filter(function(item) {
+		  return item.hasOwnProperty('order');
+		}), function(record, i) {
+		  var calcPlayers = [];
+		  angular.forEach(players, function(player, i) {
+			calcPlayers.push(player);
+		  });
+		  calcPlayers.sort(qCommon.playerSortOn(record.order, true, players))
+			  .map(function(player, i) {
+				player[record.key] = i;
+			  });
+
+		});
+
+		rule.calc(players, items, property);
 	  }
 	  /*************************************************************************
 	   * actions - プレイヤー毎に設定する操作の設定
@@ -85,6 +101,19 @@ app.factory('round', [
 	   ************************************************************************/
 	  Array.prototype.push.apply(round.global_actions, [
 	  /*************************************************************************
+	   * 表示
+	   ************************************************************************/
+	  {
+		name : "view",
+		button_css : "btn btn-danger",
+		enable : function(scope) {
+		  return true;
+		},
+		action : function(scope) {
+		  qCommon.openWindow();
+		}
+	  },
+	  /*************************************************************************
 	   * 編集
 	   ************************************************************************/
 	  {
@@ -104,7 +133,7 @@ app.factory('round', [
 		name : "undo",
 		button_css : "btn btn-danger",
 		enable : function(scope) {
-		  return (scope.history.length > 0);
+		  return (scope.history.length >= 2);
 		},
 		action : function(scope) {
 		  if (scope.history.length > 0) {
@@ -195,23 +224,26 @@ app.factory('round', [
 	  /*************************************************************************
 	   * actions - プレイヤー毎に設定する操作の設定(ラッピング)
 	   ************************************************************************/
-	  round.actions.map(function(action) {
-		action.enable = function(player, scope) {
-		  return action.enable0(player, scope.current.players,
-			  scope.current.header);
-		};
-		action.action = function(player, scope) {
-		  action.action0(player, scope.current.players, scope.current.header);
-		  // 再計算
-		  calc(scope.current.players, scope.items);
-		  // 勝抜・敗退判定
-		  judgement(scope.current.players, scope.current.header);
-		  // 再計算
-		  calc(scope.current.players, scope.items);
-		  // 履歴作成
-		  qCommon.createHist(scope);
-		};
-	  });
+	  round.actions
+		  .map(function(action) {
+			action.enable = function(player, scope) {
+			  return action.enable0(player, scope.current.players,
+				  scope.current.header, scope.property);
+			};
+			action.action = function(player, scope) {
+			  action.action0(player, scope.current.players,
+				  scope.current.header, scope.property);
+			  // 再計算
+			  calc(scope.current.players, scope.items, scope.property);
+			  // 勝抜・敗退判定
+			  judgement(scope.current.players, scope.current.header,
+				  scope.property);
+			  // 再計算
+			  calc(scope.current.players, scope.items, scope.property);
+			  // 履歴作成
+			  qCommon.createHist(scope);
+			};
+		  });
 
 	  /*************************************************************************
 	   * global_actions - 全体に対する操作の設定(ラッピング)
@@ -220,18 +252,20 @@ app.factory('round', [
 		if (angular.isUndefined(global_action.enable)) {
 		  global_action.enable = function(scope) {
 			return global_action.enable0(scope.current.players,
-				scope.current.header);
+				scope.current.header, scope.property);
 		  };
 		}
 		if (angular.isUndefined(global_action.action)) {
 		  global_action.action = function(scope) {
-			global_action.action0(scope.current.players, scope.current.header);
+			global_action.action0(scope.current.players, scope.current.header,
+				scope.property);
 			// 再計算
-			calc(scope.current.players, scope.items);
+			calc(scope.current.players, scope.items, scope.property);
 			// 勝抜・敗退判定
-			judgement(scope.current.players, scope.current.header);
+			judgement(scope.current.players, scope.current.header,
+				scope.property);
 			// 再計算
-			calc(scope.current.players, scope.items);
+			calc(scope.current.players, scope.items, scope.property);
 			// 履歴作成
 			qCommon.createHist(scope);
 		  };

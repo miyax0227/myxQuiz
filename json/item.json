@@ -55,37 +55,5 @@
 		"key": "rank",
 		"value": 0,
 		"style": "number"
-	}, {
-		"key": "o",
-		"value": 0,
-		"style": "number",
-		"css": "o"
-	}, {
-		"key": "x",
-		"value": 0,
-		"style": "number",
-		"css": "x"
-	}, {
-		"key": "position",
-		"value": 0,
-		"css": "position",
-		"order": []
-	}, {
-		"key": "priority",
-		"value": 0,
-		"css": "priority",
-		"order": [
-			{
-				"key": "status",
-				"order": "desc",
-				"alter": ["win", 1, 0]
-			}, {
-				"key": "o",
-				"order": "desc"
-			}, {
-				"key": "x",
-				"order": "asc"
-			}
-		]
 	}
 ]

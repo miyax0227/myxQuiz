@@ -1,0 +1,5 @@
+<div class="global_actions" ng-if="! viewMode()">
+	<button ng-repeat="action in global_actions" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+		{{action.name}}
+	</button>
+</div>
