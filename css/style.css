@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "MigMix 1M";
-  src: url(../font/migmix-1m-regular.ttf) ;
-  src: url(../font/migmix-1m-bold.ttf);
+	font-family: "MigMix 1M";
+	src: url(../font/migmix-1m-regular.ttf);
+	src: url(../font/migmix-1m-bold.ttf);
 }
 
 body {
@@ -33,8 +33,7 @@ select#status {
 }
 
 tr.ng-enter {
-	-webkit-transition: 0.2s linear all; /* Safari/Chrome */
-	transition: 0.2s linear all; /* All other modern browsers and IE10+ */
+	-webkit-transition: 0.2s linear all;
 	opacity: 0;
 }
 
@@ -43,8 +42,7 @@ tr.ng-enter.ng-enter-active {
 }
 
 tr.ng-leave {
-	-webkit-transition: 0.2s linear all; /* Safari/Chrome */
-	transition: 0.2s linear all; /* All other modern browsers and IE10+ */
+	-webkit-transition: 0.2s linear all;
 	opacity: 1;
 }
 
@@ -92,16 +90,15 @@ div.player {
 	transition: 1s;
 }
 
-div.player.ng-enter{
+div.player.ng-enter {
 	transition: 0s;
 }
-div.player.ng-leave{
+div.player.ng-leave {
 	transition: 0s;
 }
 
-div.player.ng-move{
+div.player.ng-move {
 }
-
 
 div.player div.name {
 	position: absolute;

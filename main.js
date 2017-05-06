@@ -27,7 +27,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 1024, height: 768, x:0, y:0});
   // デバッグ時
   // mainWindow.toggleDevTools();
-  mainWindow.loadURL('file://' + __dirname + '/board.html');
+  mainWindow.loadURL('file://' + __dirname + '/round/03_7o3x/board.html');
 
   // メイン画面の表示。ウィンドウの幅、高さを指定できる
   //subWindow = new BrowserWindow({width: 1024, height: 768, x:1368, y:0, name:"view"});

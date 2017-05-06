@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<div ng-repeat="item in items" ng-class="item.css_img" ng-if="item.hasOwnProperty('css_img')">
-		<img ng-class="player[item.key]" ng-src="./img/{{item.css_img_file[player[item.key]]}}" ng-if="item.css_img_file.hasOwnProperty(player[item.key])"></img>
+		<img ng-class="player[item.key]" ng-src="../..//img/{{item.css_img_file[player[item.key]]}}" ng-if="item.css_img_file.hasOwnProperty(player[item.key])"></img>
 	</div>
 	<div ng-repeat="action in actions" ng-class="action.css" ng-if="! viewMode()">
 		<button class="btn btn-sm" ng-click="func_player_scope(action.action, player)" ng-class="action.button_css" ng-disabled="! func_player_scope(action.enable,player)">

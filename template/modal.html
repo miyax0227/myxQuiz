@@ -1,0 +1,84 @@
+<div>
+  <a href="board.html" >BOARD </a>
+
+  <div>
+    <button type="button" class="btn btn-default btn-lg" ng-model="ruleCollapse" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+      Rule
+    </button>
+    <button type="button" class="btn btn-default btn-lg" ng-model="actionCollapse" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+      Action
+    </button>
+    <button type="button" class="btn btn-default btn-lg" ng-model="historyCollapse" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+      History
+    </button>
+    <div collapse="!ruleCollapse">
+      <h3>Rule</h3>
+      <table class="header">
+        <tr>
+          <th ng-repeat="item in defaultRule"> {{item.key}} </th>
+        </tr>
+        <tr>
+          <td ng-repeat="item in defaultRule">
+          <input ng-if="item.style == 'string'" ng-model="rule[item.key]" id="key" class="form-control"/>
+          <input ng-if="item.style == 'number'" ng-model="rule[item.key]" id="key" type="number" class="form-control number" />
+          <p ng-if="item.style == 'boolean'">
+            {{current.header[item.key]}}
+          </p></td>
+        </tr>
+      </table>
+    </div>
+    <div collapse="!actionCollapse">
+      <h3>Action</h3>
+      <button ng-repeat="action in global_actions" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+        {{action.name}}
+      </button>
+    </div>
+    <div collapse="!historyCollapse">
+      <h3>History</h3>
+      <pagination total-items="history.length" ng-model="currentPage" max-size="10" boundary-links="true" items-per-page="1" ng-change="historyChanged(currentPage-1)"></pagination>
+    </div>
+    <h3>Header</h3>
+    <table class="header">
+      <tr>
+        <th ng-repeat="item in defaultHeader"> {{item.key}} </th>
+      </tr>
+      <tr>
+        <td ng-repeat="item in defaultHeader">
+        <input ng-if="item.style == 'string'" ng-model="current.header[item.key]" id="key" class="form-control"/>
+        <input ng-if="item.style == 'number'" ng-model="current.header[item.key]" id="key" type="number" class="form-control number" />
+        <p ng-if="item.style == 'boolean'">
+          {{current.header[item.key]}}
+        </p></td>
+      </tr>
+    </table>
+    <h3>Players</h3>
+    <table class="players">
+      <tr>
+        <td>
+        <button class="btn btn-link" ng-click="addPlayer(0)">
+          Add
+        </button></td>
+        <td></td>
+        <th>index</th>
+        <th ng-repeat="item in items" ng-if="item.hasOwnProperty('style')">{{item.key}}</th>
+      </tr>
+      <tr ng-repeat="player in current.players">
+        <td>
+        <button class="btn btn-link" ng-click="addPlayer($index+1)">
+          Add
+        </button></td>
+        <td>
+        <button class="btn btn-link" ng-click="removePlayer($index)">
+          Del
+        </button></td>
+        <td class="number">{{$index+1}}</td>
+        <td ng-repeat="item in items" ng-if="item.hasOwnProperty('style')">
+        <input ng-if="item.style == 'string'" ng-model="player[item.key]" id="{{item.key}}" class="form-control" />
+        <input ng-if="item.style == 'number'" ng-model="player[item.key]" id="{{item.key}}" type="number" class="form-control number" />
+        <input ng-if="item.style == 'typeahead'" ng-model="player[item.key]" id="{{item.key}}" type="text" typeahead="pref for pref in item.option | filter:$viewValue | limitTo:8" class="form-control" />
+        <select ng-if="item.style == 'select'" ng-model="player[item.key]" id="{{item.key}}" ng-options="status for status in item.option" type="text" class="form-control" ></select></td>
+      </tr>
+    </table>
+
+  </div>
+</div>

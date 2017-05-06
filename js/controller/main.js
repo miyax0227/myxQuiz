@@ -23,7 +23,7 @@ app
   return {
 	restrict : 'A',
 	transclude:true,
-	templateUrl : 'template/players.html'
+	templateUrl : '../../template/players.html'
   }
 })
 
@@ -31,7 +31,7 @@ app
   return {
 	restrict : 'A',
 	transclude:false,
-	templateUrl : 'template/global_actions.html'
+	templateUrl : '../../template/global_actions.html'
   }
 })
 
@@ -39,7 +39,7 @@ app
   return {
 	restrict : 'A',
 	transclude:true,
-	templateUrl : 'template/scoreboard.html'
+	templateUrl : '../../template/scoreboard.html'
   }
 })
 
