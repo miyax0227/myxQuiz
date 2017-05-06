@@ -1,4 +1,4 @@
-<div class="player" ng-repeat="player in current.players as players" ng-style="getPlayerCSS(players,player)">
+<div class="player" ng-repeat="player in current.players as players" ng-style="getPlayerCSS(players,player,windowSize)">
 	<div ng-repeat="item in items" ng-class="item.css" ng-if="item.hasOwnProperty('css')">
 		<div ng-style="getItemCSS(item, player[item.key].length)">
 			<div ng-style="getRankColorCSS(item, player[item.key])">

@@ -20,5 +20,8 @@ app.factory('fileResource', function($resource) {
   // item.json - プレイヤーの属性の定義
   , $resource('../../json/item.json')
   // name.json - 名前・初期値の定義
-  , $resource('../../json/name.json') ];
+  , $resource('../../json/name.json')
+  // window.json - ウィンドウサイズの定義
+  , $resource('../../json/window.json')  
+  ];
 });

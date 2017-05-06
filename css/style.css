@@ -102,8 +102,8 @@ div.player.ng-move {
 
 div.player div.name {
 	position: absolute;
-	left: 0px;
-	top: 100px;
+	left: -25px;
+	top: -100px;
 	width: 50px;
 	font-family: "MigMix 1M";
 	font-weight: bold;
@@ -117,8 +117,8 @@ div.player div.name {
 
 div.player div.pref {
 	position: absolute;
-	left: 0px;
-	top: 300px;
+	left: -25px;
+	top: 100px;
 	font-family: "MigMix 1M";
 	font-weight: bold;
 	letter-spacing: 0px;
@@ -132,9 +132,9 @@ div.player div.paperRank {
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-fill-color: #FFFFFF;
 	position: absolute;
-	left: 0px;
-	top: 75px;
-	width: 50px;
+	left: -30px;
+	top: -125px;
+	width: 60px;
 	text-align: center;
 	font-family: "MigMix 1M";
 	font-weight: bold;
@@ -145,8 +145,8 @@ div.player div.paperRank {
 
 div.player div.o {
 	position: absolute;
-	left: -10px;
-	top: 15px;
+	left: -35px;
+	top: -185px;
 	width: 70px;
 	text-align: center;
 	font-family: "MigMix 1M";
@@ -158,8 +158,8 @@ div.player div.o {
 
 div.player div.x {
 	position: absolute;
-	left: -10px;
-	top: 315px;
+	left: -35px;
+	top: 115px;
 	width: 70px;
 	text-align: center;
 	font-family: "MigMix 1M";
@@ -171,8 +171,8 @@ div.player div.x {
 
 div.player div.status {
 	position: absolute;
-	left: 0px;
-	top: 100px;
+	left: -25px;
+	top: -100px;
 }
 
 div.player div.status img.win {
@@ -237,30 +237,30 @@ div.player div.status img.wait.ng-enter.ng-enter-active {
 
 div.player div.action_o {
 	position: absolute;
-	left: -5px;
-	top: 375px;
+	left: -30px;
+	top: 175px;
 }
 
 div.player div.action_x {
 	position: absolute;
-	left: 30px;
-	top: 375px;
+	left: 5px;
+	top: 175px;
 }
 
 div.player div.action_win {
 	position: absolute;
-	left: -5px;
-	top: 405px;
+	left: -30px;
+	top: 205px;
 }
 div.player div.action_lose {
 	position: absolute;
-	left: 15px;
-	top: 405px;
+	left: -10px;
+	top: 205px;
 }
 div.player div.action_wait {
 	position: absolute;
-	left: 35px;
-	top: 405px;
+	left: 10px;
+	top: 205px;
 }
 
 div.global_actions {
@@ -269,28 +269,22 @@ div.global_actions {
 	top: 550px;
 }
 
-hr.hr1 {
+div.player hr.hr1 {
 	position: absolute;
-	top: 55px;
-	left: 0px;
-	width: 50px;
+	top: -145px;
+	left: -30px;
+	width: 60px;
 	border: 0;
 	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -o-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
 }
 
-hr.hr2 {
+div.player hr.hr2 {
 	position: absolute;
-	top: 305px;
-	left: 0px;
-	width: 50px;
+	top: 105px;
+	left: -30px;
+	width: 60px;
 	border: 0;
 	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -ms-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
-	background-image: -o-linear-gradient(left, rgba(0,0,0,0.75), rgba(0,0,0,1), rgba(0,0,0,0.75));
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
 }

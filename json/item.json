@@ -25,19 +25,19 @@
 		"rankColor": [
 			{
 				"maxRank": 4,
-				"color": "red"
+				"color": "255,0,0"
 			}, {
 				"maxRank": 12,
-				"color": "blue"
+				"color": "0,0,255"
 			}, {
 				"maxRank": 24,
-				"color": "yellow"
+				"color": "255,255,0"
 			}, {
 				"maxRank": 48,
-				"color": "green"
+				"color": "0,255,127"
 			}, {
 				"maxRank": 1000,
-				"color": "gray"
+				"color": "127,127,127"
 			}
 		]
 	}, {

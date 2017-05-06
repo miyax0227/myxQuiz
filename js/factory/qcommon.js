@@ -37,6 +37,7 @@ app
 			  qCommonService.getPlayerCSS = getPlayerCSS;
 			  qCommonService.getItemCSS = getItemCSS;
 			  qCommonService.getRankColorCSS = getRankColorCSS;
+			  qCommonService.resizeWindow = resizeWindow;
 			  return qCommonService;
 
 			  /*****************************************************************
@@ -362,10 +363,31 @@ app
 			   * サブウィンドウを開く
 			   * 
 			   * @memberOf qCommon
+			   * @param {object} windowSize - windowSize
 			   ****************************************************************/
-			  function openWindow() {
-				$window.open('board.html?view=true', 'view',
-					'width=800, height=600, left=1368, top=0, frame=no');
+			  function openWindow(windowSize) {
+				console.log(windowSize);
+				$window
+					.open(
+						'board.html?view=true',
+						'view',
+						'width=' + windowSize.width + ', height=' + windowSize.height + ', left=' + windowSize.left + ', top=' + windowSize.top + ', frame=no');
+			  }
+
+			  /*****************************************************************
+			   * ウィンドウサイズ変更に追従する関数
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} scope - scope
+			   ****************************************************************/
+			  function resizeWindow(scope) {
+				angular.element($window).bind(
+					'resize',
+					function() {
+					  document.body.style.zoom = Math.min(
+						  $window.innerWidth / scope.windowSize.width,
+						  $window.innerHeight / scope.windowSize.height);
+					})
 			  }
 
 			  /*****************************************************************
@@ -389,13 +411,12 @@ app
 			   * @param {object} player プレイヤー
 			   * @return {object} CSSオブジェクト
 			   ****************************************************************/
-			  function getPlayerCSS(players, player) {
+			  function getPlayerCSS(players, player, windowSize) {
 				var leftBorder = 0;
-				var rightBorder = 800;
-				var playerWidth = 50;
+				var rightBorder = windowSize.width;
 
-				var playerLeft = leftBorder + (rightBorder - leftBorder) / (players.length) * (player["position"] + 0.5) - playerWidth * 0.5;
-				var playerTop = 100;
+				var playerLeft = leftBorder + (rightBorder - leftBorder) / (players.length) * (player["position"] + 0.5);
+				var playerTop = windowSize.height / 2;
 
 				return {
 				  position : 'absolute',
@@ -439,10 +460,10 @@ app
 			  function getRankColorCSS(item, rank) {
 				if (item.hasOwnProperty('rankColor')) {
 				  return {
-					'backgroundColor' : item.rankColor
+					'backgroundColor' : 'rgb(' + item.rankColor
 						.filter(function(element) {
 						  return element.maxRank >= rank
-						})[0].color
+						})[0].color + ')'
 				  };
 				}
 				return null;

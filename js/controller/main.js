@@ -22,7 +22,7 @@ app
 .directive('players', function() {
   return {
 	restrict : 'A',
-	transclude:true,
+	transclude : true,
 	templateUrl : '../../template/players.html'
   }
 })
@@ -30,7 +30,7 @@ app
 .directive('globalActions', function() {
   return {
 	restrict : 'A',
-	transclude:false,
+	transclude : false,
 	templateUrl : '../../template/global_actions.html'
   }
 })
@@ -38,7 +38,7 @@ app
 .directive('scoreboard', function() {
   return {
 	restrict : 'A',
-	transclude:true,
+	transclude : true,
 	templateUrl : '../../template/scoreboard.html'
   }
 })
@@ -52,7 +52,6 @@ app
 		'qCommon',
 		'round',
 		function($scope, $q, fileResource, qCommon, round) {
-
 		  /* getPlayerCSS - プレイヤーの位置情報CSS */
 		  $scope.getPlayerCSS = qCommon.getPlayerCSS;
 		  /* getItemCSS - 伸縮が必要なアイテムのCSS */
@@ -61,8 +60,6 @@ app
 		  $scope.getRankColorCSS = qCommon.getRankColorCSS;
 		  /* viewMode - 表示モードの判定 */
 		  $scope.viewMode = qCommon.viewMode;
-		  /* openWIndow - 表示用ウィンドウの表示 */
-		  $scope.openWindow = qCommon.openWindow;
 		  /* addPlayer - プレイヤー追加 */
 		  $scope.addPlayer = function(index) {
 			qCommon.addPlayer(index, $scope);
@@ -88,7 +85,10 @@ app
 		  })).then(
 			  function(strs) {
 				// すべてのPromiseオブジェクトが取得できたら実行される
-
+				// windowサイズ
+				$scope.windowSize = strs[4][0];
+				qCommon.resizeWindow($scope);
+				
 				// items生成
 				$scope.items = strs[2];
 				Array.prototype.push.apply($scope.items, round.items);

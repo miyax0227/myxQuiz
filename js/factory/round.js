@@ -110,7 +110,7 @@ app.factory('round', [
 		  return true;
 		},
 		action : function(scope) {
-		  qCommon.openWindow();
+		  qCommon.openWindow(scope.windowSize);
 		}
 	  },
 	  /*************************************************************************
