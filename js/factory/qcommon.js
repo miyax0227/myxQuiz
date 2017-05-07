@@ -39,6 +39,9 @@ app
 			  qCommonService.getRankColorCSS = getRankColorCSS;
 			  qCommonService.resizeWindow = resizeWindow;
 			  qCommonService.adjustWindow = adjustWindow;
+			  qCommonService.addQCount = addQCount;
+			  qCommonService.getDisplayValue = getDisplayValue;
+			  qCommonService.setMotion = setMotion;
 			  return qCommonService;
 
 			  /*****************************************************************
@@ -123,6 +126,8 @@ app
 				player.rank = rank;
 				/* status */
 				player.status = "win";
+				/* 休みを消す */
+				player.absent = 0;
 			  }
 
 			  /*****************************************************************
@@ -140,6 +145,9 @@ app
 				player.rank = rank;
 				/* status */
 				player.status = "lose";
+				/* 休みを消す */
+				player.absent = 0;
+
 			  }
 
 			  /*****************************************************************
@@ -485,4 +493,92 @@ app
 				return null;
 			  }
 
+			  /*****************************************************************
+			   * 表示用の値を取得する
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} item item.json等に定義された表示方法
+			   * @param {number/string} value 本当の値
+			   * @return {string} 表示用の値
+			   ****************************************************************/
+			  function getDisplayValue(item, value) {
+				// nullやゼロの場合表示しない指定がされており、実際の値がnullやゼロの場合
+				if (item.hasOwnProperty('invisibleWhenZeroOrNull') && (value == 0 || value == null)) {
+				  return "";
+
+				  // 文字の繰り返しが指定されている場合
+				} else if (item.hasOwnProperty('repeatChar')) {
+				  if (parseInt(value) == null || value == null || value == undefined) {
+					value = 0;
+				  }
+				  console.log(value, parseInt(value));
+				  return Array(parseInt(value) + 1).join(item.repeatChar);
+
+				  // 普通の場合
+				} else {
+				  var prefix = "";
+				  var suffix = "";
+				  if (item.hasOwnProperty('prefix')) {
+					prefix = item.prefix;
+				  }
+				  if (item.hasOwnProperty('suffix')) {
+					suffix = item.suffix;
+				  }
+				  //suffixに'th'が指定されている場合は、valueに応じてst,nd,rdに変換
+				  if (suffix == 'th'){
+					if([1,21,31,41,51,61,71,81,91].indexOf(value%100)>=0){
+					  suffix = 'st';
+					}else if([2,22,32,42,52,62,72,82,92].indexOf(value%100)>=0){
+					  suffix = 'nd';
+					}else if([3,23,33,43,53,63,73,83,93].indexOf(value%100)>=0){
+					  suffix = 'rd';
+					}
+				  }
+				  
+				  return prefix + value + suffix;
+				}
+			  }
+
+			  /*****************************************************************
+			   * 問題数を進める
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} players プレイヤー情報
+			   * @param {object} header ヘッダ情報
+			   ****************************************************************/
+			  function addQCount(players, header) {
+				// 問題数を進める
+				header.qCount++;
+				// 休みの人の対応
+				angular.forEach(players, function(player) {
+				  if (player.status == "preabsent") {
+					player.status = "absent";
+				  } else if (player.status == "absent") {
+					if (player.absent >= 2) {
+					  player.absent--;
+					} else {
+					  player.absent = 0;
+					  player.status = "normal";
+					}
+				  }
+				});
+			  }
+			  
+			  /*****************************************************************
+			   * モーションを設定する(アニメーションさせるため、motionとmotion2に交互に設定する)
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} player 設定先プレイヤー
+			   * @param {object} motion 設定したいmotion
+			   ****************************************************************/
+			  function setMotion(player, motion) {
+				if(player.motion==""){
+				  player.motion = motion;
+				  player.motion2 = "";
+				}else{
+				  player.motion = "";
+				  player.motion2 = motion;
+				}
+			  }
+			  
 			} ]);

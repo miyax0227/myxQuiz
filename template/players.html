@@ -2,7 +2,7 @@
 	<div ng-repeat="item in items" ng-class="item.css" ng-if="item.hasOwnProperty('css')">
 		<div ng-style="getItemCSS(item, player[item.key].length)">
 			<div ng-style="getRankColorCSS(item, player[item.key])">
-				{{item.prefix + player[item.key] + item.suffix}}
+				{{getDisplayValue(item ,player[item.key])}}
 			</div>
 		</div>
 	</div>
@@ -10,12 +10,11 @@
 		<img ng-class="player[item.key]" ng-src="../..//img/{{item.css_img_file[player[item.key]]}}" ng-if="item.css_img_file.hasOwnProperty(player[item.key])"></img>
 	</div>
 	<div ng-repeat="action in actions" ng-class="action.css" ng-if="! viewMode()">
-		<button class="btn btn-sm" ng-click="func_player_scope(action.action, player)" ng-class="action.button_css" ng-disabled="! func_player_scope(action.enable,player)">
+		<button ng-click="func_player_scope(action.action, player)" ng-class="action.button_css" ng-disabled="! func_player_scope(action.enable,player)">
 			{{action.name}}
 		</button>
 	</div>
-	<div ng-transclude>
-	</div>
+	<div ng-transclude></div>
 	<hr class="hr1" />
 	<hr class="hr2" />
 </div>

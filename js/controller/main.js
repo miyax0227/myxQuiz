@@ -80,6 +80,8 @@ app
 		  $scope.calc = function() {
 			round.calc($scope.current.players, $scope.items, $scope.property);
 		  };
+		  /* getDisplayValue - 表示用の値の取得 */
+		  $scope.getDisplayValue = qCommon.getDisplayValue;
 
 		  /*********************************************************************
 		   * 読み込み対象のファイルを全て読み込み終えたら実行される処理（事実上のメイン処理）

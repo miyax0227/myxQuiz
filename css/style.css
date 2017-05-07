@@ -169,6 +169,24 @@ div.player div.x {
 	transform: translate(0px, 0px);
 }
 
+div.player div.absent {
+	-webkit-text-stroke-color: #000000;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-fill-color: #FFFF22;
+	position: absolute;
+	left: -35px;
+	top: -95px;
+	width: 70px;
+	text-align: center;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+	letter-spacing: 0px;
+	line-height: 80%;
+	font-size: 30px;
+	transform: translate(0px, 0px);
+	z-index: 1;
+}
+
 div.player div.status {
 	position: absolute;
 	left: -25px;
@@ -235,16 +253,82 @@ div.player div.status img.wait.ng-enter.ng-enter-active {
 	transform: scale(1,1);
 }
 
+div.player div.status img.absent {
+	position: absolute;
+	left: -5px;
+	top: 0px;
+	width: 60px;
+	opacity: 0.3;
+}
+
+div.player div.status img.absent.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0;
+	transform: scale(1.2,1.2);
+}
+
+div.player div.status img.absent.ng-enter.ng-enter-active {
+	opacity: 0.3;
+	transform: scale(1,1);
+}
+
+div.player div.motion {
+	position: absolute;
+	left: -25px;
+	top: 0px;
+}
+
+div.player div.motion img.o {
+	position: absolute;
+	left: 0px;
+	top: -30px;
+	opacity: 0;
+}
+
+div.player div.motion img.o.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0.9;
+	transform: scale(1,1);
+}
+
+div.player div.motion img.o.ng-enter.ng-enter-active {
+	opacity: 0;
+	transform: scale(1.5,1.5);
+}
+
+div.player div.motion img.x {
+	position: absolute;
+	left: 0px;
+	top: -30px;
+	opacity: 0;
+}
+
+div.player div.motion img.x.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+	opacity: 0.9;
+	transform: scale(1.5,1.5);
+}
+
+div.player div.motion img.x.ng-enter.ng-enter-active {
+	opacity: 0;
+	transform: scale(1,1);
+}
+
 div.player div.action_o {
 	position: absolute;
-	left: -30px;
-	top: 175px;
+	left: -22px;
+	top: -100px;
+	opacity: 0.8;
 }
 
 div.player div.action_x {
 	position: absolute;
-	left: 5px;
-	top: 175px;
+	left: -22px;
+	top: 60px;
+	opacity: 0.8;
 }
 
 div.player div.action_win {

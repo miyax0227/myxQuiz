@@ -11,7 +11,9 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
   var rule = {};
   var win = qCommon.win;
   var lose = qCommon.lose;
-
+  var setMotion = qCommon.setMotion;
+  var addQCount = qCommon.addQCount;
+  
   rule.judgement = judgement;
   rule.calc = calc;
 
@@ -36,12 +38,8 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	key : "x",
 	value : 0,
 	style : "number",
-	css : "x"
-  }, {
-	key : "absent",
-	value : 0,
-	style : "number",
-	css : "absent"
+	css : "x",
+	invisibleWhenZeroOrNull : true
   }, {
 	key : "position",
 	value : 0,
@@ -72,31 +70,36 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
    * 正解時
    ****************************************************************************/
   {
-	name : "o",
+	name : "○",
 	css : "action_o",
-	button_css : "btn btn-primary btn-sm",
+	button_css : "btn btn-primary btn-lg",
 	enable0 : function(player, players, header, property) {
 	  return (player.status == "normal" && !header.playoff);
 	},
 	action0 : function(player, players, header, property) {
+	  setMotion(player,"o");
 	  player.o++;
-	  header.qCount += property.qAddCount;
-
+	  addQCount(players, header);
 	}
   },
   /*****************************************************************************
    * 誤答時
    ****************************************************************************/
   {
-	name : "x",
+	name : "×",
 	css : "action_x",
-	button_css : "btn btn-danger btn-sm",
+	button_css : "btn btn-danger btn-lg",
 	enable0 : function(player, players, header) {
 	  return (player.status == "normal" && !header.playoff);
 	},
-	action0 : function(player, players, header) {
+	action0 : function(player, players, header,property) {
+	  setMotion(player,"x");
 	  player.x++;
-	  header.qCount++;
+	  if(property.penalty > 0){
+		player.absent = property.penalty;
+		player.status = "preabsent";
+	  }
+	  addQCount(players, header);
 	}
   } ];
 
@@ -114,7 +117,7 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	  return true;
 	},
 	action0 : function(players, header) {
-	  header.qCount++;
+	  addQCount(players, header);
 	}
   } ];
 

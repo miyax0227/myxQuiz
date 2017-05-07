@@ -13,15 +13,11 @@
 		"style": "number"
 	}, {
 		"key": "penalty",
-		"value": 2,
+		"value": 8,
 		"style":"number"
 	},{
 		"key": "defaultName",
 		"value": "no name??",
 		"style": "string"
-	}, {
-		"key": "qAddCount",
-		"value": 3,
-		"style": "number"
 	}
 ]

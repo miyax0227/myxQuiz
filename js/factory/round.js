@@ -231,6 +231,7 @@ app.factory('round', [
 				  scope.current.header, scope.property);
 			};
 			action.action = function(player, scope) {
+			  //action0を実行
 			  action.action0(player, scope.current.players,
 				  scope.current.header, scope.property);
 			  // 再計算
@@ -257,6 +258,7 @@ app.factory('round', [
 		}
 		if (angular.isUndefined(global_action.action)) {
 		  global_action.action = function(scope) {
+			// action0を実行
 			global_action.action0(scope.current.players, scope.current.header,
 				scope.property);
 			// 再計算

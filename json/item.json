@@ -41,6 +41,24 @@
 			}
 		]
 	}, {
+		"key": "motion",
+		"value": "",
+		"style": "string",
+		"css_img": "motion",
+		"css_img_file": {
+			"o": "o.png",
+			"x": "x.png"
+		}
+	}, {
+		"key": "motion2",
+		"value": "",
+		"style": "string",
+		"css_img": "motion",
+		"css_img_file": {
+			"o": "o.png",
+			"x": "x.png"
+		}
+	}, {
 		"key": "status",
 		"value": "normal",
 		"style": "select",
@@ -49,11 +67,18 @@
 		"css_img_file": {
 			"win": "win.png",
 			"lose": "lose.png",
-			"wait": "wait.png"
+			"wait": "wait.png",
+			"absent": "absent.png"
 		}
 	}, {
 		"key": "rank",
 		"value": 0,
 		"style": "number"
+	}, {
+		"key": "absent",
+		"value": 0,
+		"style": "number",
+		"css": "absent",
+		"repeatChar": "●\n"
 	}
 ]
