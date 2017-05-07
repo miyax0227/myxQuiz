@@ -38,11 +38,13 @@ app
 			  qCommonService.getItemCSS = getItemCSS;
 			  qCommonService.getRankColorCSS = getRankColorCSS;
 			  qCommonService.resizeWindow = resizeWindow;
+			  qCommonService.adjustWindow = adjustWindow;
 			  return qCommonService;
 
 			  /*****************************************************************
 			   * ログ文字列を生成する
 			   * 
+			   * @memberOf qCommon
 			   * @param {Object} scope - $scope
 			   ****************************************************************/
 			  function getLog(scope) {
@@ -79,8 +81,9 @@ app
 				// ログ出力
 				try {
 				  var fs = require('fs');
-				  fs.appendFile('test.txt', getLog(scope) + "\n");
-				  fs.writeFile('current.json', angular.toJson(scope.current));
+				  fs.appendFile(__dirname + '/test.txt', getLog(scope) + "\n");
+				  fs.writeFile(__dirname + '/current.json', angular
+					  .toJson(scope.current));
 				} catch (e) {
 				  console.log('fs is not supported.');
 				}
@@ -156,7 +159,6 @@ app
 			  /*****************************************************************
 			   * 値の置換をする
 			   * 
-			   * @namespace myxQuiz
 			   * @memberof qCommon
 			   * @param {string,number} a - 元の文字列/数値
 			   * @param {Array. <string,number>} alter - (置換前文字列/数値,
@@ -366,33 +368,45 @@ app
 			   * @param {object} windowSize - windowSize
 			   ****************************************************************/
 			  function openWindow(windowSize) {
-				console.log(windowSize);
-				$window
-					.open(
-						'board.html?view=true',
-						'view',
-						'width=' + windowSize.width + ', height=' + windowSize.height + ', left=' + windowSize.left + ', top=' + windowSize.top + ', frame=no');
+				var parameter = "";
+				parameter += 'width=' + windowSize.width;
+				parameter += ',height=' + windowSize.height;
+				parameter += ',left=' + windowSize.left;
+				parameter += ',top=' + windowSize.top;
+				parameter += ',frame=no'
+
+				$window.open('board.html?view=true',
+					getRoundName() + ' - view', parameter);
 			  }
 
 			  /*****************************************************************
-			   * ウィンドウサイズ変更に追従する関数
+			   * ウィンドウサイズ変更を検知する関数
 			   * 
 			   * @memberOf qCommon
 			   * @param {object} scope - scope
 			   ****************************************************************/
 			  function resizeWindow(scope) {
-				angular.element($window).bind(
-					'resize',
-					function() {
-					  document.body.style.zoom = Math.min(
-						  $window.innerWidth / scope.windowSize.width,
-						  $window.innerHeight / scope.windowSize.height);
-					})
+				/*
+				 * angular.element($window).bind( 'resize',adjustWindow(scope));
+				 */
+			  }
+
+			  /*****************************************************************
+			   * ウィンドウサイズ変更に追従してzoomを変更する関数
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} scope - scope
+			   ****************************************************************/
+			  function adjustWindow(scope) {
+				document.body.style.zoom = Math.min(
+					$window.innerWidth / scope.windowSize.width,
+					$window.innerHeight / scope.windowSize.height);
 			  }
 
 			  /*****************************************************************
 			   * header.jsonに記載されたデフォルトのheaderを取得する
 			   * 
+			   * @memberOf qCommon
 			   * @param {object} header.jsonをパースした状態のオブジェクト
 			   * @return {object} ヘッダ情報
 			   ****************************************************************/
@@ -407,6 +421,7 @@ app
 			  /*****************************************************************
 			   * playerの表示位置を示すCSSを取得する
 			   * 
+			   * @memberOf qCommon
 			   * @param [Array] players 全プレイヤー情報
 			   * @param {object} player プレイヤー
 			   * @return {object} CSSオブジェクト
@@ -429,6 +444,7 @@ app
 			  /*****************************************************************
 			   * 伸縮が必要なアイテムのCSS情報を取得する
 			   * 
+			   * @memberOf qCommon
 			   * @param {object} item アイテム情報
 			   * @param {object} length 文字列長
 			   * @return {object} CSSオブジェクト
@@ -448,11 +464,11 @@ app
 				}
 				return null;
 			  }
-			  ;
 
 			  /*****************************************************************
 			   * 値により背景色が変わるアイテムのCSS情報を取得する（主に予選順位用）
 			   * 
+			   * @memberOf qCommon
 			   * @param {object} item アイテム情報
 			   * @param {object} rank 順位
 			   * @return {object} CSSオブジェクト
@@ -468,6 +484,5 @@ app
 				}
 				return null;
 			  }
-			  ;
 
 			} ]);

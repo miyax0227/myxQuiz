@@ -1,42 +1,46 @@
 'use strict';
 
 // Electronのモジュール
-const electron = require("electron");
+const
+electron = require("electron");
 
 // アプリケーションをコントロールするモジュール
-const app = electron.app;
+const
+app = electron.app;
 
 // ウィンドウを作成するモジュール
-const BrowserWindow = electron.BrowserWindow;
+const
+BrowserWindow = electron.BrowserWindow;
 
 // メインウィンドウはGCされないようにグローバル宣言
-let mainWindow;
-//let subWindow;
+let
+mainWindow;
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
-    app.quit();
+	app.quit();
   }
 });
 
 // Electronの初期化完了後に実行
 app.on('ready', function() {
-	
-  // メイン画面の表示。ウィンドウの幅、高さを指定できる
-  mainWindow = new BrowserWindow({width: 1024, height: 768, x:0, y:0});
-  // デバッグ時
-  // mainWindow.toggleDevTools();
-  mainWindow.loadURL('file://' + __dirname + '/round/03_7o3x/board.html');
+  var fs = require('fs');
+  var data = JSON.parse(fs.readFileSync(__dirname + '/json/window.json', 'utf-8'));
 
   // メイン画面の表示。ウィンドウの幅、高さを指定できる
-  //subWindow = new BrowserWindow({width: 1024, height: 768, x:1368, y:0, name:"view"});
-  // デバッグ時
-  // subWindow.toggleDevTools();
-  //subWindow.loadURL('file://' + __dirname + '/board.html?view=true');
-  
+  mainWindow = new BrowserWindow({
+	width : data[1].width,
+	height : data[1].height,
+	x : data[1].left,
+	y : data[1].top
+  });
+
+  mainWindow.loadURL(__dirname + '/index.html');
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on('closed', function() {
-    mainWindow = null;
+	mainWindow = null;
+
   });
+
 });

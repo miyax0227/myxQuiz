@@ -52,6 +52,10 @@ app
 		'qCommon',
 		'round',
 		function($scope, $q, fileResource, qCommon, round) {
+		  /* windowサイズの調整 */
+		  $scope.adjustWindow = function(){
+			qCommon.adjustWindow($scope);
+		  }
 		  /* getPlayerCSS - プレイヤーの位置情報CSS */
 		  $scope.getPlayerCSS = qCommon.getPlayerCSS;
 		  /* getItemCSS - 伸縮が必要なアイテムのCSS */
@@ -85,18 +89,25 @@ app
 		  })).then(
 			  function(strs) {
 				// すべてのPromiseオブジェクトが取得できたら実行される
+				
 				// windowサイズ
 				$scope.windowSize = strs[4][0];
 				qCommon.resizeWindow($scope);
+				qCommon.adjustWindow($scope);
 				
 				// items生成
 				$scope.items = strs[2];
+				// rule内に独自定義されたitemを追加
 				Array.prototype.push.apply($scope.items, round.items);
+				
 				// defaultHeader生成
 				$scope.defaultHeader = strs[0];
+				// rule内に独自定義されたheaderを追加
 				Array.prototype.push.apply($scope.defaultHeader, round.head);
-
+				
+				//localStorageとbind
 				qCommon.saveToStorage($scope, qCommon.viewMode());
+				//操作ウィンドウ側の場合、localStorageに格納されていた値とは関係なく初期化
 				if (!qCommon.viewMode()) {
 				  var initCurrent = {};
 				  initCurrent.header = qCommon

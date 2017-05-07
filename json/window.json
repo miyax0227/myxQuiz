@@ -1,6 +1,19 @@
 [
 	{
+	    "explain":"表示用ウィンドウの表示位置",
 		"left": 1368,
+		"top": 0,
+		"width": 800,
+		"height": 600
+	}, {
+	    "explain":"メニューウィンドウの表示位置",
+		"left": 0,
+		"top": 0,
+		"width": 200,
+		"height": 600
+	},{
+	    "explain":"操作ウィンドウの表示位置",
+		"left": 200,
 		"top": 0,
 		"width": 800,
 		"height": 600
