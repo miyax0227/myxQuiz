@@ -24,22 +24,17 @@
 				<th>#</th>
 				<th>ラウンド名</th>
 				<th>問目</th>
-				<th>初期化</th>				
+				<th><a href="javascript:void(0);" ng-click="initialize()">初期化</a></th>
 			</tr>
 			<tr ng-repeat="round in rounds">
+				<td> {{rounds.indexOf(round)}} </td>
+				<td><a target="_blank" ng-click="round.click()" href="javascript:void(0);">{{round.name}}</a></td>
+				<td> {{round.qCount}} </td>
 				<td>
-					{{rounds.indexOf(round)}}
-				</td>
-				<td>
-					<a target="_blank" ng-click="round.click()" href="javascript:void(0);">{{round.name}}</a>
-				</td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-			</tr>	
+				<button class="btn btn-sm" ng-disabled="! round.initializable" ng-click="round.initialize()">
+					初期化
+				</button></td>
+			</tr>
 		</table>
 	</body>
 </html>

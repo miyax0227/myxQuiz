@@ -84,9 +84,10 @@ app
 				// ログ出力
 				try {
 				  var fs = require('fs');
-				  fs.appendFile(__dirname + '/test.txt', getLog(scope) + "\n");
-				  fs.writeFile(__dirname + '/current.json', angular
-					  .toJson(scope.current));
+				  fs
+					  .writeFile(
+						  __dirname + '/../../history/current/' + getRoundName() + '.json',
+						  angular.toJson(scope.current));
 				} catch (e) {
 				  console.log('fs is not supported.');
 				}
@@ -511,7 +512,6 @@ app
 				  if (parseInt(value) == null || value == null || value == undefined) {
 					value = 0;
 				  }
-				  console.log(value, parseInt(value));
 				  return Array(parseInt(value) + 1).join(item.repeatChar);
 
 				  // 普通の場合
@@ -524,17 +524,20 @@ app
 				  if (item.hasOwnProperty('suffix')) {
 					suffix = item.suffix;
 				  }
-				  //suffixに'th'が指定されている場合は、valueに応じてst,nd,rdに変換
-				  if (suffix == 'th'){
-					if([1,21,31,41,51,61,71,81,91].indexOf(value%100)>=0){
+				  // suffixに'th'が指定されている場合は、valueに応じてst,nd,rdに変換
+				  if (suffix == 'th') {
+					if ([ 1, 21, 31, 41, 51, 61, 71, 81, 91 ]
+						.indexOf(value % 100) >= 0) {
 					  suffix = 'st';
-					}else if([2,22,32,42,52,62,72,82,92].indexOf(value%100)>=0){
+					} else if ([ 2, 22, 32, 42, 52, 62, 72, 82, 92 ]
+						.indexOf(value % 100) >= 0) {
 					  suffix = 'nd';
-					}else if([3,23,33,43,53,63,73,83,93].indexOf(value%100)>=0){
+					} else if ([ 3, 23, 33, 43, 53, 63, 73, 83, 93 ]
+						.indexOf(value % 100) >= 0) {
 					  suffix = 'rd';
 					}
 				  }
-				  
+
 				  return prefix + value + suffix;
 				}
 			  }
@@ -563,7 +566,7 @@ app
 				  }
 				});
 			  }
-			  
+
 			  /*****************************************************************
 			   * モーションを設定する(アニメーションさせるため、motionとmotion2に交互に設定する)
 			   * 
@@ -572,13 +575,13 @@ app
 			   * @param {object} motion 設定したいmotion
 			   ****************************************************************/
 			  function setMotion(player, motion) {
-				if(player.motion==""){
+				if (player.motion == "") {
 				  player.motion = motion;
 				  player.motion2 = "";
-				}else{
+				} else {
 				  player.motion = "";
 				  player.motion2 = motion;
 				}
 			  }
-			  
+
 			} ]);
