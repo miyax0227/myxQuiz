@@ -187,6 +187,31 @@ div.player div.absent {
 	z-index: 1;
 }
 
+div.player div.rank {
+	position: absolute;
+	left: -25px;
+	top: -15px;
+}
+
+div.player div.rank img {
+	width: 60px;
+	height: 40px;
+	background-color: rgba(255,255,255,0.5);
+}
+
+div.player div.rank img.ng-enter {
+	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+	opacity: 0;
+	-webkit-transform: rotateX(180deg);
+}
+
+div.player div.rank img.ng-enter.ng-enter-active {
+	opacity: 1.0;
+	-webkit-transform: rotateX(0deg);
+}
+
+
 div.player div.status {
 	position: absolute;
 	left: -25px;
@@ -198,7 +223,7 @@ div.player div.status img.win {
 	left: -5px;
 	top: 25px;
 	width: 60px;
-	opacity: 0.9;
+	opacity: 0.7;
 }
 
 div.player div.status img.win.ng-enter {
@@ -218,7 +243,7 @@ div.player div.status img.lose {
 	left: -12px;
 	top: 20px;
 	width: 75px;
-	opacity: 0.9;
+	opacity: 0.7;
 }
 
 div.player div.status img.lose.ng-enter {
@@ -238,7 +263,7 @@ div.player div.status img.wait {
 	left: -5px;
 	top: 38px;
 	width: 60px;
-	opacity: 0.9;
+	opacity: 0.7;
 }
 
 div.player div.status img.wait.ng-enter {

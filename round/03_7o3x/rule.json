@@ -4,6 +4,10 @@
 		"value": "7○3×クイズ",
 		"style": "string"
 	}, {
+		"key": "maxRankDisplay",
+		"value": 2,
+		"style": "number"
+	}, {
 		"key": "winningPoint",
 		"value": 7,
 		"style": "number"
@@ -14,8 +18,8 @@
 	}, {
 		"key": "penalty",
 		"value": 8,
-		"style":"number"
-	},{
+		"style": "number"
+	}, {
 		"key": "defaultName",
 		"value": "no name??",
 		"style": "string"
