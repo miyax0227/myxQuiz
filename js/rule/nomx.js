@@ -13,7 +13,7 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
   var lose = qCommon.lose;
   var setMotion = qCommon.setMotion;
   var addQCount = qCommon.addQCount;
-  
+
   rule.judgement = judgement;
   rule.calc = calc;
 
@@ -73,11 +73,12 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	name : "○",
 	css : "action_o",
 	button_css : "btn btn-primary btn-lg",
+	keyArray : "k1",
 	enable0 : function(player, players, header, property) {
 	  return (player.status == "normal" && !header.playoff);
 	},
 	action0 : function(player, players, header, property) {
-	  setMotion(player,"o");
+	  setMotion(player, "o");
 	  player.o++;
 	  addQCount(players, header);
 	}
@@ -89,13 +90,14 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	name : "×",
 	css : "action_x",
 	button_css : "btn btn-danger btn-lg",
+	keyArray : "k2",
 	enable0 : function(player, players, header) {
 	  return (player.status == "normal" && !header.playoff);
 	},
-	action0 : function(player, players, header,property) {
-	  setMotion(player,"x");
+	action0 : function(player, players, header, property) {
+	  setMotion(player, "x");
 	  player.x++;
-	  if(property.penalty > 0){
+	  if (property.penalty > 0) {
 		player.absent = property.penalty;
 		player.status = "preabsent";
 	  }
@@ -113,6 +115,7 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
   {
 	name : "thru",
 	button_css : "btn btn-info",
+	keyboard : "Space",
 	enable0 : function(players, header) {
 	  return true;
 	},
@@ -154,10 +157,12 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
    * @param {Object} items - items
    ****************************************************************************/
   function calc(players, items, property) {
-	angular.forEach(players, function(player) {
+	angular.forEach(players, function(player, index) {
 	  if (player.name == "") {
 		player.name = property.defaultName;
 	  }
+	  //キーボード入力時の配列の紐付け　ローリング等の特殊形式でない場合はこのままでOK
+	  player.keyIndex = index;
 	});
   }
 

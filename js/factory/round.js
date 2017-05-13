@@ -132,6 +132,7 @@ app.factory('round', [
 	  {
 		name : "undo",
 		button_css : "btn btn-danger",
+		keyboard : "Left",
 		enable : function(scope) {
 		  return (scope.history.length >= 2);
 		},
@@ -152,6 +153,7 @@ app.factory('round', [
 	  {
 		name : "redo",
 		button_css : "btn btn-danger",
+		keyboard : "Right",
 		enable : function(scope) {
 		  return (scope.redoHistory.length > 0);
 		},
@@ -231,7 +233,7 @@ app.factory('round', [
 				  scope.current.header, scope.property);
 			};
 			action.action = function(player, scope) {
-			  //action0を実行
+			  // action0を実行
 			  action.action0(player, scope.current.players,
 				  scope.current.header, scope.property);
 			  // 再計算

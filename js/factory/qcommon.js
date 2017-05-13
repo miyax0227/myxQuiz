@@ -42,6 +42,7 @@ app
 			  qCommonService.addQCount = addQCount;
 			  qCommonService.getDisplayValue = getDisplayValue;
 			  qCommonService.setMotion = setMotion;
+			  qCommonService.keyDown = keyDown;
 			  return qCommonService;
 
 			  /*****************************************************************
@@ -306,18 +307,22 @@ app
 			   * @param {object} scope - $scope
 			   ****************************************************************/
 			  function editCurrent(scope) {
+				scope.workKeyDown = false;
 				var modal = $modal.open({
 				  templateUrl : "../../template/modal.html",
 				  scope : scope
 				});
+
 				modal.result.then(function() {
 				  // 従属変数の再計算
 				  scope.calc();
 				  createHist(scope);
+				  scope.workKeyDown = true;
 				}, function() {
 				  // 従属変数の再計算a
 				  scope.calc();
 				  createHist(scope);
+				  scope.workKeyDown = true;
 				})
 			  }
 
@@ -584,4 +589,79 @@ app
 				}
 			  }
 
+			  /*****************************************************************
+			   * keydownイベントのハンドラ
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} scope $scope
+			   * @param {object} event $event
+			   ****************************************************************/
+			  function keyDown(scope, event) {
+				// キー押下が有効な場合
+				if (scope.workKeyDown) {
+				  var key = "";
+				  // viewModeの場合は処理終了
+				  if (viewMode()){
+					return;
+				  }
+				  
+				  // keyCodeリストにない場合は処理終了
+				  if (!scope.keyCode.hasOwnProperty(event.which)) {
+					return;
+				  }
+				  key = scope.keyCode[event.which];
+				  // Shiftが同時押しされている場合
+				  if (event.shiftKey) {
+					key = "S+" + key;
+				  }
+				  // Ctrlが同時押しされている場合
+				  if (event.ctrlKey) {
+					key = "C+" + key;
+				  }
+				  // Altが同時押しされている場合
+				  if (event.altKey) {
+					key = "A+" + key;
+				  }
+
+				  // playerに対する操作
+				  // 合致する配列がある場合
+				  angular.forEach(scope.keyArray, function(keyArray,
+					  keyArrayName) {
+					if (keyArray.indexOf(key) >= 0) {
+					  var index = keyArray.indexOf(key);
+
+					  // actionsの中に合致するkeyArrayNameがある場合
+					  angular.forEach(scope.actions, function(action) {
+						if (action.keyArray == keyArrayName) {
+
+						  // playersの中に一致するkeyIndexのplayerがいる場合
+						  angular.forEach(scope.current.players, function(
+							  player) {
+							if (player.keyIndex == index) {
+							  console.log(action.name, index, player.name);
+							  // そのplayerのactionが行える状態の場合
+							  if (action.enable(player, scope)) {
+								// そのplayerのactionを実行
+								action.action(player, scope);
+							  }
+							}
+						  })
+						}
+					  })
+					}
+				  });
+
+				  // global_actionの操作
+				  // global_actionの中に合致するkeyboardがある場合
+				  angular.forEach(scope.global_actions, function(action) {
+					if (action.keyboard == key) {
+					  // そのglobal_actionが行える状態の場合
+					  if (action.enable(scope)) {
+						// そのglobal_actionを実行
+						action.action(scope);
+					  }
+					}
+				  });
+				}
+			  }
 			} ]);

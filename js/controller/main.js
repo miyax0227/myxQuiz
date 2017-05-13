@@ -52,6 +52,12 @@ app
 		'qCommon',
 		'round',
 		function($scope, $q, fileResource, qCommon, round) {
+		  /* keyDownイベントのハンドラ */
+		  $scope.keyDown = function(event){
+			qCommon.keyDown($scope, event);
+		  }
+		  $scope.workKeyDown = true;
+		  
 		  /* windowサイズの調整 */
 		  $scope.adjustWindow = function(){
 			qCommon.adjustWindow($scope);
@@ -91,6 +97,10 @@ app
 		  })).then(
 			  function(strs) {
 				// すべてのPromiseオブジェクトが取得できたら実行される
+				
+				// keyboard入力の定義
+				$scope.keyArray = strs[5][0];
+				$scope.keyCode = strs[5][1];
 				
 				// windowサイズ
 				$scope.windowSize = strs[4][0];
