@@ -4,8 +4,7 @@
  * app - Angularモジュール本体
  ******************************************************************************/
 var appName = "myxQuiz";
-var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate",
-	"ngResource" ]);
+var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate", "ngResource" ]);
 
 /*******************************************************************************
  * fileResource - 全てのjsonファイルの読込の同期をとるためのfactory
@@ -24,7 +23,5 @@ app.factory('fileResource', function($resource) {
   // window.json - ウィンドウサイズの定義
   , $resource('../../json/window.json')
   // keyboard.json - キーボード入力の定義
-  , $resource('../../json/keyboard.json')
-
-  ];
+  , $resource('../../json/keyboard.json') ];
 });

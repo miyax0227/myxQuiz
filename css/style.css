@@ -59,7 +59,18 @@ div.scoreBoard {
 div.title {
 	position: absolute;
 	top: 0px;
-	left: 25px;
+	margin-left: 2%;
+	font-size: 40px;
+	font-family: "MigMix 1M";
+	font-weight: bold;
+}
+
+div.timer {
+	position: absolute;
+	top: 0px;
+	width: 96%;
+	margin-left: 2%;
+	text-align: right;
 	font-size: 40px;
 	font-family: "MigMix 1M";
 	font-weight: bold;
@@ -68,7 +79,7 @@ div.title {
 div.qCount {
 	position: absolute;
 	top: 45px;
-	left: 25px;
+	margin-left: 2%;
 	font-size: 30px;
 	font-family: "MigMix 1M";
 	font-weight: bold;
@@ -77,8 +88,9 @@ div.qCount {
 hr.hr0 {
 	position: absolute;
 	top: 30px;
-	left: 30px;
-	width: 740px;
+	width: 96%;
+	margin-left: 2%;
+	margin-right: 2%;
 	border: 0;
 	height: 2px;
 	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));

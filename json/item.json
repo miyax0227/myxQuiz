@@ -42,7 +42,6 @@
 		]
 	}, {
 		"key": "motion",
-		"value": "",
 		"style": "string",
 		"css_img": "motion",
 		"css_img_file": {
@@ -51,7 +50,6 @@
 		}
 	}, {
 		"key": "motion2",
-		"value": "",
 		"style": "string",
 		"css_img": "motion",
 		"css_img_file": {

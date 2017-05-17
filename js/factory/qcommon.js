@@ -18,7 +18,8 @@ app
 			'$interval',
 			'$location',
 			'$window',
-			function($modal, $localStorage, $interval, $location, $window) {
+			'$filter',
+			function($modal, $localStorage, $interval, $location, $window, $filter) {
 
 			  var qCommonService = {};
 			  qCommonService.createHist = createHist;
@@ -43,6 +44,10 @@ app
 			  qCommonService.getDisplayValue = getDisplayValue;
 			  qCommonService.setMotion = setMotion;
 			  qCommonService.keyDown = keyDown;
+			  qCommonService.getHistoryFileName = getHistoryFileName;
+			  qCommonService.initPlayers = initPlayers;
+			  qCommonService.getTimer = getTimer;
+			  qCommonService.timerStart = timerStart;
 			  return qCommonService;
 
 			  /*****************************************************************
@@ -82,13 +87,12 @@ app
 				scope.currentPage = scope.history.length;
 				// redoHistoryを初期化
 				scope.redoHistory = [];
+
+				console.log(scope.property);
 				// ログ出力
 				try {
 				  var fs = require('fs');
-				  fs
-					  .writeFile(
-						  __dirname + '/../../history/current/' + getRoundName() + '.json',
-						  angular.toJson(scope.current));
+				  fs.writeFile(getHistoryFileName(), angular.toJson(scope.current));
 				} catch (e) {
 				  console.log('fs is not supported.');
 				}
@@ -214,36 +218,33 @@ app
 					flg : 0
 				  };
 				  // orderの先頭から順にaとbのそれぞれの要素を指定して比較
-				  angular
-					  .forEach(
-						  order,
-						  function(record, i) {
-							// 返却予定値が0（同値）の場合のみ比較
-							if (this.flg == 0) {
-							  var aComp = a[record.key];
-							  var bComp = b[record.key];
-							  // alterが設定されている場合、decodeで値を置換
-							  if (record.hasOwnProperty('alter')) {
-								aComp = decode(aComp, record.alter);
-								bComp = decode(bComp, record.alter);
-							  }
-							  // 降順（desc）の場合
-							  if (record.hasOwnProperty('order') && record.order == 'desc') {
-								if (aComp < bComp) {
-								  this.flg = 1;
-								} else if (aComp > bComp) {
-								  this.flg = -1;
-								}
-								// 昇順の場合
-							  } else {
-								if (aComp < bComp) {
-								  this.flg = -1;
-								} else if (aComp > bComp) {
-								  this.flg = 1;
-								}
-							  }
-							}
-						  }, context);
+				  angular.forEach(order, function(record, i) {
+					// 返却予定値が0（同値）の場合のみ比較
+					if (this.flg == 0) {
+					  var aComp = a[record.key];
+					  var bComp = b[record.key];
+					  // alterが設定されている場合、decodeで値を置換
+					  if (record.hasOwnProperty('alter')) {
+						aComp = decode(aComp, record.alter);
+						bComp = decode(bComp, record.alter);
+					  }
+					  // 降順（desc）の場合
+					  if (record.hasOwnProperty('order') && record.order == 'desc') {
+						if (aComp < bComp) {
+						  this.flg = 1;
+						} else if (aComp > bComp) {
+						  this.flg = -1;
+						}
+						// 昇順の場合
+					  } else {
+						if (aComp < bComp) {
+						  this.flg = -1;
+						} else if (aComp > bComp) {
+						  this.flg = 1;
+						}
+					  }
+					}
+				  }, context);
 				  // 返却予定値が0以外の場合、ここで返却
 				  if (context.flg != 0) {
 					return context.flg;
@@ -289,8 +290,7 @@ app
 				  // 現在の状態から人数が変わらない場合、ポインタ保持して内容を入替
 				} else {
 				  angular.forEach(hist.players, function(record, i) {
-					angular.forEach(scope.current.players[i], function(value,
-						key) {
+					angular.forEach(scope.current.players[i], function(value, key) {
 					  delete scope.current.players[i][key];
 					});
 					angular.forEach(hist.players[i], function(value, key) {
@@ -338,19 +338,40 @@ app
 				var defaultObj = {};
 				defaultObj[getRoundName()] = {
 				  header : {},
-				  players : []
+				  players : [],
+				  timer : {}
 				};
 
 				scope.$storage = $localStorage.$default(defaultObj);
-
-				scope.current = scope.$storage[getRoundName()];
+				scope.current = {};
+				scope.current.header = scope.$storage[getRoundName()].header;
+				scope.current.players = scope.$storage[getRoundName()].players;
+				scope.timer = {};
+				scope.timer = scope.$storage[getRoundName()].timer;
+				console.log(scope.timer);
 
 				if (viewMode) {
-				  var t;
-				  t = $interval(function() {
+				  // localStorage内ではdate型を扱えないので変換
+				  if (scope.timer['destination'] != null) {
+					scope.timer['destination'] = new Date(scope.timer['destination']);
+				  }
+				  if (scope.timer['restTime'] != null) {
+					scope.timer['restTime'] = new Date(scope.timer['restTime']);
+				  }
+
+				  angular.element($window).bind('storage', function(event) {
 					var hist = $localStorage.$default(defaultObj);
 					refreshCurrent(hist[getRoundName()], scope);
-				  }, 100)
+					scope.timer = scope.$storage[getRoundName()].timer;
+
+					// localStorage内ではdate型を扱えないので変換
+					if (scope.timer['destination'] != null) {
+					  scope.timer['destination'] = new Date(scope.timer['destination']);
+					}
+					if (scope.timer['restTime'] != null) {
+					  scope.timer['restTime'] = new Date(scope.timer['restTime']);
+					}
+				  });
 				}
 			  }
 
@@ -389,8 +410,7 @@ app
 				parameter += ',top=' + windowSize.top;
 				parameter += ',frame=no'
 
-				$window.open('board.html?view=true',
-					getRoundName() + ' - view', parameter);
+				$window.open('board.html?view=true', getRoundName() + ' - view', parameter);
 			  }
 
 			  /*****************************************************************
@@ -400,9 +420,10 @@ app
 			   * @param {object} scope - scope
 			   ****************************************************************/
 			  function resizeWindow(scope) {
-				/*
-				 * angular.element($window).bind( 'resize',adjustWindow(scope));
-				 */
+				angular.element($window).bind('resize', function(event) {
+				  adjustWindow(scope);
+				});
+
 			  }
 
 			  /*****************************************************************
@@ -412,8 +433,7 @@ app
 			   * @param {object} scope - scope
 			   ****************************************************************/
 			  function adjustWindow(scope) {
-				document.body.style.zoom = Math.min(
-					$window.innerWidth / scope.windowSize.width,
+				document.body.style.zoom = Math.min($window.innerWidth / scope.windowSize.width,
 					$window.innerHeight / scope.windowSize.height);
 			  }
 
@@ -490,10 +510,9 @@ app
 			  function getRankColorCSS(item, rank) {
 				if (item.hasOwnProperty('rankColor')) {
 				  return {
-					'backgroundColor' : 'rgb(' + item.rankColor
-						.filter(function(element) {
-						  return element.maxRank >= rank
-						})[0].color + ')'
+					'backgroundColor' : 'rgb(' + item.rankColor.filter(function(element) {
+					  return element.maxRank >= rank
+					})[0].color + ')'
 				  };
 				}
 				return null;
@@ -531,14 +550,11 @@ app
 				  }
 				  // suffixに'th'が指定されている場合は、valueに応じてst,nd,rdに変換
 				  if (suffix == 'th') {
-					if ([ 1, 21, 31, 41, 51, 61, 71, 81, 91 ]
-						.indexOf(value % 100) >= 0) {
+					if ([ 1, 21, 31, 41, 51, 61, 71, 81, 91 ].indexOf(value % 100) >= 0) {
 					  suffix = 'st';
-					} else if ([ 2, 22, 32, 42, 52, 62, 72, 82, 92 ]
-						.indexOf(value % 100) >= 0) {
+					} else if ([ 2, 22, 32, 42, 52, 62, 72, 82, 92 ].indexOf(value % 100) >= 0) {
 					  suffix = 'nd';
-					} else if ([ 3, 23, 33, 43, 53, 63, 73, 83, 93 ]
-						.indexOf(value % 100) >= 0) {
+					} else if ([ 3, 23, 33, 43, 53, 63, 73, 83, 93 ].indexOf(value % 100) >= 0) {
 					  suffix = 'rd';
 					}
 				  }
@@ -601,10 +617,10 @@ app
 				if (scope.workKeyDown) {
 				  var key = "";
 				  // viewModeの場合は処理終了
-				  if (viewMode()){
+				  if (viewMode()) {
 					return;
 				  }
-				  
+
 				  // keyCodeリストにない場合は処理終了
 				  if (!scope.keyCode.hasOwnProperty(event.which)) {
 					return;
@@ -625,8 +641,7 @@ app
 
 				  // playerに対する操作
 				  // 合致する配列がある場合
-				  angular.forEach(scope.keyArray, function(keyArray,
-					  keyArrayName) {
+				  angular.forEach(scope.keyArray, function(keyArray, keyArrayName) {
 					if (keyArray.indexOf(key) >= 0) {
 					  var index = keyArray.indexOf(key);
 
@@ -635,10 +650,8 @@ app
 						if (action.keyArray == keyArrayName) {
 
 						  // playersの中に一致するkeyIndexのplayerがいる場合
-						  angular.forEach(scope.current.players, function(
-							  player) {
+						  angular.forEach(scope.current.players, function(player) {
 							if (player.keyIndex == index) {
-							  console.log(action.name, index, player.name);
 							  // そのplayerのactionが行える状態の場合
 							  if (action.enable(player, scope)) {
 								// そのplayerのactionを実行
@@ -664,4 +677,79 @@ app
 				  });
 				}
 			  }
+
+			  /*****************************************************************
+			   * 履歴ファイル名の取得
+			   * 
+			   * @memberOf qCommon
+			   ****************************************************************/
+			  function getHistoryFileName() {
+				return __dirname + '/../../history/current/' + getRoundName() + '.json';
+			  }
+
+			  /*****************************************************************
+			   * プレイヤー情報の補完・初期化
+			   * 
+			   * @memberOf qCommon
+			   * @param {array} players - プレイヤー情報
+			   * @param {array} items - アイテム情報
+			   * @retrn {array} 不足していたアイテム情報が付加されたプレイヤー情報
+			   ****************************************************************/
+			  function initPlayers(players, items) {
+				var toPlayers = angular.copy(players);
+				console.log(toPlayers);
+				angular.forEach(toPlayers, function(player) {
+				  angular.forEach(items, function(item) {
+					if (!player.hasOwnProperty(item.key) && item.hasOwnProperty('value')) {
+					  player[item.key] = item.value;
+					}
+				  });
+				});
+				console.log(toPlayers);
+				return toPlayers;
+			  }
+
+			  /*****************************************************************
+			   * タイマー表示
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} scope - $scope
+			   * @return {string} timer - 表示用タイマー文字列
+			   ****************************************************************/
+			  function getTimer(scope) {
+				function timerFormat(millisec) {
+				  return $filter('date')(new Date(millisec), 'm:ss.sss');
+				}
+
+				if (scope.timer.working) {
+				  if (scope.timer.destination == null) {
+					return timerFormat(scope.timer.restTime);
+				  } else {
+					if (scope.timer.destination.getTime() - (new Date()).getTime() > 0) {
+					  return timerFormat(scope.timer.destination.getTime() - (new Date()).getTime());
+					} else {
+					  return timerFormat(0);
+					}
+				  }
+				} else {
+				  if (scope.timerRestTime == null) {
+					return timerFormat(scope.timer.defaultTime * 1000);
+				  } else {
+					return timerFormat(scope.timer.restTime);
+				  }
+				}
+			  }
+
+			  /*****************************************************************
+			   * タイマー表示用タイマー
+			   * 
+			   * @memberOf qCommon
+			   ****************************************************************/
+			  function timerStart(scope) {
+				var t;
+				t = $interval(function() {
+				  scope.timerDisplay = getTimer(scope);
+				}, 100)
+			  }
+
 			} ]);

@@ -42,12 +42,10 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	invisibleWhenZeroOrNull : true
   }, {
 	key : "position",
-	value : 0,
 	css : "position",
 	order : []
   }, {
 	key : "priority",
-	value : 0,
 	css : "priority",
 	order : [ {
 	  key : "status",
@@ -161,7 +159,7 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	  if (player.name == "") {
 		player.name = property.defaultName;
 	  }
-	  //キーボード入力時の配列の紐付け　ローリング等の特殊形式でない場合はこのままでOK
+	  // キーボード入力時の配列の紐付け ローリング等の特殊形式でない場合はこのままでOK
 	  player.keyIndex = index;
 	});
   }

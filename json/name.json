@@ -3,56 +3,26 @@
 		"entryNo": 1,
 		"name": "篠山 奈央",
 		"pref": "大分県",
-		"paperRank": 10,
-		"status": "normal",
-		"rank": 0,
-		"o": 0,
-		"x": 0,
-		"position": 0,
-		"priority": 1
+		"paperRank": 10
 	}, {
 		"entryNo": 2,
 		"name": "小玉 小雁",
 		"pref": "岩手県",
-		"paperRank": 20,
-		"status": "normal",
-		"rank": 0,
-		"o": 0,
-		"x": 0,
-		"position": 1,
-		"priority": 2
+		"paperRank": 20
 	}, {
 		"entryNo": 3,
 		"name": "篠崎 サダヲ",
 		"pref": "福岡県",
-		"paperRank": 30,
-		"status": "normal",
-		"rank": 0,
-		"o": 0,
-		"x": 0,
-		"position": 2,
-		"priority": 3
+		"paperRank": 30
 	}, {
 		"entryNo": 4,
 		"name": "上原 真悠子",
 		"pref": "神奈川県",
-		"paperRank": 40,
-		"status": "normal",
-		"rank": 0,
-		"o": 0,
-		"x": 0,
-		"position": 3,
-		"priority": 0
+		"paperRank": 40
 	}, {
 		"entryNo": 5,
 		"name": "中園 真吾",
 		"pref": "香川県",
-		"paperRank": 50,
-		"status": "normal",
-		"rank": 0,
-		"o": 0,
-		"x": 0,
-		"position": 4,
-		"priority": 4
+		"paperRank": 50
 	}
 ]

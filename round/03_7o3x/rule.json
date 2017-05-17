@@ -4,6 +4,10 @@
 		"value": "7○3×クイズ",
 		"style": "string"
 	}, {
+		"key": "timer",
+		"value": 180,
+		"style": "time"
+	}, {
 		"key": "maxRankDisplay",
 		"value": 2,
 		"style": "number"

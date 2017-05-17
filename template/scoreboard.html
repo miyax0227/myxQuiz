@@ -2,6 +2,9 @@
 	<div class="title">
 		{{property.title}}
 	</div>
+	<div class="timer" ng-if="timer.visible">
+		{{timerDisplay}}
+	</div>
 	<hr class="hr0" />
 	<div class="qCount" >
 		{{current.header.qCount}}問目
