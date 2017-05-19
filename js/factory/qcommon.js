@@ -48,6 +48,7 @@ app
 			  qCommonService.initPlayers = initPlayers;
 			  qCommonService.getTimer = getTimer;
 			  qCommonService.timerStart = timerStart;
+			  qCommonService.victoryName = victoryName;
 			  return qCommonService;
 
 			  /*****************************************************************
@@ -363,7 +364,7 @@ app
 					var hist = $localStorage.$default(defaultObj);
 					refreshCurrent(hist[getRoundName()], scope);
 					scope.timer = scope.$storage[getRoundName()].timer;
-
+					
 					// localStorage内ではdate型を扱えないので変換
 					if (scope.timer['destination'] != null) {
 					  scope.timer['destination'] = new Date(scope.timer['destination']);
@@ -697,7 +698,6 @@ app
 			   ****************************************************************/
 			  function initPlayers(players, items) {
 				var toPlayers = angular.copy(players);
-				console.log(toPlayers);
 				angular.forEach(toPlayers, function(player) {
 				  angular.forEach(items, function(item) {
 					if (!player.hasOwnProperty(item.key) && item.hasOwnProperty('value')) {
@@ -705,7 +705,6 @@ app
 					}
 				  });
 				});
-				console.log(toPlayers);
 				return toPlayers;
 			  }
 
@@ -718,23 +717,34 @@ app
 			   ****************************************************************/
 			  function getTimer(scope) {
 				function timerFormat(millisec) {
-				  return $filter('date')(new Date(millisec), 'm:ss.sss');
+				  if (millisec >= 60000) {
+					// 1分以上の場合、m:ss形式
+					return $filter('date')(new Date(millisec), 'm:ss');
+				  } else {
+					// 1分未満の場合、s.s形式
+					return $filter('date')(new Date(millisec), 's.sss').slice(0, -2);
+				  }
 				}
 
 				if (scope.timer.working) {
 				  if (scope.timer.destination == null) {
+					// タイマー動作中、目標時刻無しの場合、残り時間を表示
 					return timerFormat(scope.timer.restTime);
 				  } else {
 					if (scope.timer.destination.getTime() - (new Date()).getTime() > 0) {
+					  // タイマー動作中、目標時刻有り、現在が目標時刻より前の場合、差分を計算して表示
 					  return timerFormat(scope.timer.destination.getTime() - (new Date()).getTime());
 					} else {
+					  // タイマー動作中、目標時刻有り、現在が目標時刻以降の場合、0秒を表示
 					  return timerFormat(0);
 					}
 				  }
 				} else {
 				  if (scope.timerRestTime == null) {
+					// タイマー停止、残り時間が無い場合、初期時間を表示
 					return timerFormat(scope.timer.defaultTime * 1000);
 				  } else {
+					// タイマー停止、残り時間がある場合、残り時間を表示
 					return timerFormat(scope.timer.restTime);
 				  }
 				}
@@ -750,6 +760,24 @@ app
 				t = $interval(function() {
 				  scope.timerDisplay = getTimer(scope);
 				}, 100)
+			  }
+
+			  /*****************************************************************
+			   * 優勝者名の設定
+			   * 
+			   * @memberOf qCommon
+			   * @param {object} scope - $scope
+			   ****************************************************************/
+			  function victoryName(scope) {
+				if (scope.current.players.filter(function(player) {
+				  return player.rank == 1;
+				}).length == 1) {
+				  return  scope.current.players.filter(function(player) {
+					return player.rank == 1;
+				  })[0].name;
+				} else {
+				  return null;
+				}
 			  }
 
 			} ]);

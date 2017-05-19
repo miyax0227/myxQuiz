@@ -5,7 +5,7 @@
 		"style": "string"
 	}, {
 		"key": "timer",
-		"value": 180,
+		"value": 70,
 		"style": "time"
 	}, {
 		"key": "maxRankDisplay",

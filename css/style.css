@@ -1,411 +1,458 @@
 @font-face {
-	font-family: "MigMix 1M";
-	src: url(../font/migmix-1m-regular.ttf);
-	src: url(../font/migmix-1m-bold.ttf);
+    font-family: "MigMix 1M";
+    src: url(../font/migmix-1m-regular.ttf);
+    src: url(../font/migmix-1m-bold.ttf);
 }
 
 body {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .number {
-	text-align: right;
+    text-align: right;
 }
 
 table.players {
-	width: 800px;
+    width: 800px;
 }
 
 input#name {
-	width: 100px;
+    width: 100px;
 }
 
 input#pref {
-	width: 80px;
+    width: 80px;
 }
 
 input.number {
-	width: 65px;
+    width: 65px;
 }
 
 select#status {
-	width: 100px;
+    width: 100px;
 }
 
 tr.ng-enter {
-	-webkit-transition: 0.2s linear all;
-	opacity: 0;
+    -webkit-transition: 0.2s linear all;
+    opacity: 0;
 }
 
 tr.ng-enter.ng-enter-active {
-	opacity: 1;
+    opacity: 1;
 }
 
 tr.ng-leave {
-	-webkit-transition: 0.2s linear all;
-	opacity: 1;
+    -webkit-transition: 0.2s linear all;
+    opacity: 1;
 }
 
 tr.ng-leave.ng-leave-active {
-	opacity: 0;
+    opacity: 0;
 }
 
 div.scoreBoard {
-	position: absolute;
-	top: 0px;
-	left: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 div.title {
-	position: absolute;
-	top: 0px;
-	margin-left: 2%;
-	font-size: 40px;
-	font-family: "MigMix 1M";
-	font-weight: bold;
+    position: absolute;
+    top: 0px;
+    margin-left: 2%;
+    font-size: 40px;
+    font-family: "MigMix 1M";
+    font-weight: bold;
 }
 
 div.timer {
-	position: absolute;
-	top: 0px;
-	width: 96%;
-	margin-left: 2%;
-	text-align: right;
-	font-size: 40px;
-	font-family: "MigMix 1M";
-	font-weight: bold;
+    position: absolute;
+    top: 0px;
+    width: 96%;
+    margin-left: 2%;
+    text-align: right;
+    font-size: 40px;
+    font-family: "MigMix 1M";
+    font-weight: bold;
 }
 
 div.qCount {
-	position: absolute;
-	top: 45px;
-	margin-left: 2%;
-	font-size: 30px;
-	font-family: "MigMix 1M";
-	font-weight: bold;
+    position: absolute;
+    top: 45px;
+    margin-left: 2%;
+    font-size: 30px;
+    font-family: "MigMix 1M";
+    font-weight: bold;
 }
 
 hr.hr0 {
-	position: absolute;
-	top: 30px;
-	width: 96%;
-	margin-left: 2%;
-	margin-right: 2%;
-	border: 0;
-	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+    position: absolute;
+    top: 30px;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border: 0;
+    height: 2px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+}
+
+div.victory {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.5);
+}
+
+div.victory.ng-enter {
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 3s;
+    opacity: 0;
+    -webkit-filter: blur(30px);
+}
+
+div.victory.ng-enter-active {
+    opacity: 1;
+    -webkit-filter: blur(0px);
+}
+
+div.victory h1.cupTitle {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 10%;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    font-size: 100px;
+}
+
+div.victory h1.first {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 25%;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    font-size: 100px;
+}
+
+div.victory h1.name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 40%;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    font-size: 100px;
 }
 
 div.player {
-	width: 200px;
-	height: 1000px;
-	transition: 1s;
+    width: 200px;
+    height: 1000px;
+    transition: 1s;
 }
 
 div.player.ng-enter {
-	transition: 0s;
+    transition: 0s;
 }
 div.player.ng-leave {
-	transition: 0s;
+    transition: 0s;
 }
 
 div.player.ng-move {
 }
 
 div.player div.name {
-	position: absolute;
-	left: -25px;
-	top: -100px;
-	width: 50px;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: -24px;
-	font-size: 56px;
-	-webkit-writing-mode: vertical-rl;
-	-webkit-text-orientation: upright;
-	transform-origin: 0px 12px;
-	transform: translate(16px,-10px);
+    position: absolute;
+    left: -25px;
+    top: -100px;
+    width: 50px;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: -24px;
+    font-size: 56px;
+    -webkit-writing-mode: vertical-rl;
+    -webkit-text-orientation: upright;
+    transform-origin: 0px 12px;
+    transform: translate(16px,-10px);
 }
 
 div.player div.pref {
-	position: absolute;
-	left: -25px;
-	top: 100px;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: 0px;
-	font-size: 24px;
-	transform-origin: 0px 0px;
-	transform: translate(5px,-5px);
+    position: absolute;
+    left: -25px;
+    top: 100px;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: 0px;
+    font-size: 24px;
+    transform-origin: 0px 0px;
+    transform: translate(5px,-5px);
 }
 
 div.player div.paperRank {
-	-webkit-text-stroke-color: #000000;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-fill-color: #FFFFFF;
-	position: absolute;
-	left: -30px;
-	top: -125px;
-	width: 60px;
-	text-align: center;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: 0px;
-	font-size: 20px;
-	transform: translate(0px, 0px);
+    -webkit-text-stroke-color: #000000;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: #FFFFFF;
+    position: absolute;
+    left: -30px;
+    top: -125px;
+    width: 60px;
+    text-align: center;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: 0px;
+    font-size: 20px;
+    transform: translate(0px, 0px);
 }
 
 div.player div.o {
-	position: absolute;
-	left: -35px;
-	top: -185px;
-	width: 70px;
-	text-align: center;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: 0px;
-	font-size: 50px;
-	transform: translate(0px, 0px);
+    position: absolute;
+    left: -35px;
+    top: -185px;
+    width: 70px;
+    text-align: center;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: 0px;
+    font-size: 50px;
+    transform: translate(0px, 0px);
 }
 
 div.player div.x {
-	position: absolute;
-	left: -35px;
-	top: 115px;
-	width: 70px;
-	text-align: center;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: 0px;
-	font-size: 50px;
-	transform: translate(0px, 0px);
+    position: absolute;
+    left: -35px;
+    top: 115px;
+    width: 70px;
+    text-align: center;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: 0px;
+    font-size: 50px;
+    transform: translate(0px, 0px);
 }
 
 div.player div.absent {
-	-webkit-text-stroke-color: #000000;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-fill-color: #FFFF22;
-	position: absolute;
-	left: -35px;
-	top: -95px;
-	width: 70px;
-	text-align: center;
-	font-family: "MigMix 1M";
-	font-weight: bold;
-	letter-spacing: 0px;
-	line-height: 80%;
-	font-size: 30px;
-	transform: translate(0px, 0px);
-	z-index: 1;
+    -webkit-text-stroke-color: #000000;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: #FFFF22;
+    position: absolute;
+    left: -35px;
+    top: -95px;
+    width: 70px;
+    text-align: center;
+    font-family: "MigMix 1M";
+    font-weight: bold;
+    letter-spacing: 0px;
+    line-height: 80%;
+    font-size: 30px;
+    transform: translate(0px, 0px);
+    z-index: 1;
 }
 
 div.player div.rank {
-	position: absolute;
-	left: -25px;
-	top: -15px;
+    position: absolute;
+    left: -25px;
+    top: -15px;
 }
 
 div.player div.rank img {
-	width: 60px;
-	height: 40px;
-	background-color: rgba(255,255,255,0.5);
+    width: 60px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.5);
 }
 
 div.player div.rank img.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
-	opacity: 0;
-	-webkit-transform: rotateX(180deg);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+    opacity: 0;
+    -webkit-transform: rotateX(180deg);
 }
 
 div.player div.rank img.ng-enter.ng-enter-active {
-	opacity: 1.0;
-	-webkit-transform: rotateX(0deg);
+    opacity: 1.0;
+    -webkit-transform: rotateX(0deg);
 }
 
-
 div.player div.status {
-	position: absolute;
-	left: -25px;
-	top: -100px;
+    position: absolute;
+    left: -25px;
+    top: -100px;
 }
 
 div.player div.status img.win {
-	position: absolute;
-	left: -5px;
-	top: 25px;
-	width: 60px;
-	opacity: 0.7;
+    position: absolute;
+    left: -5px;
+    top: 25px;
+    width: 60px;
+    opacity: 0.7;
 }
 
 div.player div.status img.win.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0;
-	transform: scale(1.5,1.5);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0;
+    transform: scale(1.5,1.5);
 }
 
 div.player div.status img.win.ng-enter.ng-enter-active {
-	opacity: 0.9;
-	transform: scale(1,1);
+    opacity: 0.9;
+    transform: scale(1,1);
 }
 
 div.player div.status img.lose {
-	position: absolute;
-	left: -12px;
-	top: 20px;
-	width: 75px;
-	opacity: 0.7;
+    position: absolute;
+    left: -12px;
+    top: 20px;
+    width: 75px;
+    opacity: 0.7;
 }
 
 div.player div.status img.lose.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0;
-	transform: scale(1.5,1.5) rotate(30deg);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0;
+    transform: scale(1.5,1.5) rotate(30deg);
 }
 
 div.player div.status img.lose.ng-enter.ng-enter-active {
-	opacity: 0.9;
-	transform: scale(1,1) rotate(0deg);
+    opacity: 0.9;
+    transform: scale(1,1) rotate(0deg);
 }
 
 div.player div.status img.wait {
-	position: absolute;
-	left: -5px;
-	top: 38px;
-	width: 60px;
-	opacity: 0.7;
+    position: absolute;
+    left: -5px;
+    top: 38px;
+    width: 60px;
+    opacity: 0.7;
 }
 
 div.player div.status img.wait.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0;
-	transform: scale(1.5,1.5);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0;
+    transform: scale(1.5,1.5);
 }
 
 div.player div.status img.wait.ng-enter.ng-enter-active {
-	opacity: 0.9;
-	transform: scale(1,1);
+    opacity: 0.9;
+    transform: scale(1,1);
 }
 
 div.player div.status img.absent {
-	position: absolute;
-	left: -5px;
-	top: 0px;
-	width: 60px;
-	opacity: 0.3;
+    position: absolute;
+    left: -5px;
+    top: 0px;
+    width: 60px;
+    opacity: 0.3;
 }
 
 div.player div.status img.absent.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0;
-	transform: scale(1.2,1.2);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0;
+    transform: scale(1.2,1.2);
 }
 
 div.player div.status img.absent.ng-enter.ng-enter-active {
-	opacity: 0.3;
-	transform: scale(1,1);
+    opacity: 0.3;
+    transform: scale(1,1);
 }
 
 div.player div.motion {
-	position: absolute;
-	left: -25px;
-	top: 0px;
+    position: absolute;
+    left: -25px;
+    top: 0px;
 }
 
 div.player div.motion img.o {
-	position: absolute;
-	left: 0px;
-	top: -30px;
-	opacity: 0;
+    position: absolute;
+    left: 0px;
+    top: -30px;
+    opacity: 0;
 }
 
 div.player div.motion img.o.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0.9;
-	transform: scale(1,1);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0.9;
+    transform: scale(1,1);
 }
 
 div.player div.motion img.o.ng-enter.ng-enter-active {
-	opacity: 0;
-	transform: scale(1.5,1.5);
+    opacity: 0;
+    transform: scale(1.5,1.5);
 }
 
 div.player div.motion img.x {
-	position: absolute;
-	left: 0px;
-	top: -30px;
-	opacity: 0;
+    position: absolute;
+    left: 0px;
+    top: -30px;
+    opacity: 0;
 }
 
 div.player div.motion img.x.ng-enter {
-	-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-	opacity: 0.9;
-	transform: scale(1.5,1.5);
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    opacity: 0.9;
+    transform: scale(1.5,1.5);
 }
 
 div.player div.motion img.x.ng-enter.ng-enter-active {
-	opacity: 0;
-	transform: scale(1,1);
+    opacity: 0;
+    transform: scale(1,1);
 }
 
 div.player div.action_o {
-	position: absolute;
-	left: -22px;
-	top: -100px;
-	opacity: 0.8;
+    position: absolute;
+    left: -22px;
+    top: -100px;
+    opacity: 0.8;
 }
 
 div.player div.action_x {
-	position: absolute;
-	left: -22px;
-	top: 60px;
-	opacity: 0.8;
+    position: absolute;
+    left: -22px;
+    top: 60px;
+    opacity: 0.8;
 }
 
 div.player div.action_win {
-	position: absolute;
-	left: -30px;
-	top: 205px;
+    position: absolute;
+    left: -30px;
+    top: 205px;
 }
 div.player div.action_lose {
-	position: absolute;
-	left: -10px;
-	top: 205px;
+    position: absolute;
+    left: -10px;
+    top: 205px;
 }
 div.player div.action_wait {
-	position: absolute;
-	left: 10px;
-	top: 205px;
+    position: absolute;
+    left: 10px;
+    top: 205px;
 }
 
 div.global_actions {
-	position: absolute;
-	left: 30px;
-	top: 550px;
+    position: absolute;
+    left: 30px;
+    top: 550px;
 }
 
 div.player hr.hr1 {
-	position: absolute;
-	top: -145px;
-	left: -30px;
-	width: 60px;
-	border: 0;
-	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+    position: absolute;
+    top: -145px;
+    left: -30px;
+    width: 60px;
+    border: 0;
+    height: 2px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
 }
 
 div.player hr.hr2 {
-	position: absolute;
-	top: 105px;
-	left: -30px;
-	width: 60px;
-	border: 0;
-	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+    position: absolute;
+    top: 105px;
+    left: -30px;
+    width: 60px;
+    border: 0;
+    height: 2px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
 }

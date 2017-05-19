@@ -11,6 +11,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   var round = {};
   var win = qCommon.win;
   var lose = qCommon.lose;
+  var victory = qCommon.victory;
+
   round.calc = calc;
   round.actions = rule.actions;
   round.global_actions = rule.global_actions;
@@ -170,11 +172,11 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  return (scope.timer.destination == null);
 	},
 	action : function(scope) {
-	  if(scope.timer.working){
+	  if (scope.timer.working) {
 		scope.timer.destination = null;
 		scope.timer.restTime = null;
 		scope.timer.working = false;
-	  }else{
+	  } else {
 		scope.timer.destination = new Date(new Date().getTime() + scope.timer.defaultTime * 1000);
 		scope.timer.restTime = null;
 		scope.timer.working = true;
@@ -191,10 +193,10 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  return scope.timer.working;
 	},
 	action : function(scope) {
-	  if(scope.timer.restTime == null){
+	  if (scope.timer.restTime == null) {
 		scope.timer.restTime = new Date(scope.timer.destination.getTime() - new Date().getTime());
 		scope.timer.destination = null;
-	  }else{
+	  } else {
 		scope.timer.destination = new Date(new Date().getTime() + scope.timer.restTime.getTime());
 		scope.timer.restTime = null;
 	  }
@@ -210,7 +212,20 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  return true;
 	},
 	action : function(scope) {
-	  scope.timer.visible = ! scope.timer.visible;
+	  scope.timer.visible = !scope.timer.visible;
+	}
+  },
+  /*****************************************************************************
+   * 優勝者名の表示/非表示
+   ****************************************************************************/
+  {
+	name : "victory",
+	button_css : "btn btn-info",
+	enable : function(scope) {
+	  return scope.victoryName() != null;
+	},
+	action : function(scope) {
+	  scope.current.header.victoryNameVisible = ! scope.current.header.victoryNameVisible;
 	}
   } ]);
   /*
