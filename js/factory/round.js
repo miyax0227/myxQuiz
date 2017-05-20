@@ -19,11 +19,29 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   round.items = rule.items;
   round.head = rule.head;
 
+  /*****************************************************************************
+   * 判定関数
+   * 
+   * @memberOf round
+   * @param {array} players - プレイヤー情報リスト
+   * @param {array} items - アイテム情報リスト
+   * @param {object} property - プロパティ情報
+   ****************************************************************************/
   function judgement(players, header, property) {
 	return rule.judgement(players, header, property);
   }
 
-  function calc(players, items, property) {
+  /*****************************************************************************
+   * 再計算関数
+   * 
+   * @memberOf round
+   * @param {array} players - プレイヤー情報リスト
+   * @param {object} header - ヘッダ情報
+   * @param {array} items - アイテム情報リスト
+   * @param {object} property - プロパティ情報
+   ****************************************************************************/
+  function calc(players, header, items, property) {
+	// 優先順位の計算
 	angular.forEach(items.filter(function(item) {
 	  return item.hasOwnProperty('order');
 	}), function(record, i) {
@@ -34,10 +52,34 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  calcPlayers.sort(qCommon.playerSortOn(record.order, true, players)).map(function(player, i) {
 		player[record.key] = i;
 	  });
-
 	});
 
-	rule.calc(players, items, property);
+	// ターンオーバー対象の計算
+	if (!property.hasOwnProperty('openRankArray') || property.openRankArray == null) {
+	  header.openRank = -1;
+	}
+
+	// openRankが-1の場合、全てオープン
+	if (header.openRank < 0) {
+	  angular.forEach(players, function(player) {
+		if (player.close) {
+		  player.close = false;
+		}
+	  });
+
+	  // openRankが0以上の場合、openRank以下のpaperRankを持つプレイヤーをopen
+	} else {
+	  angular.forEach(players, function(player) {
+		console.log(player.paperRank, player.close, header.openRank);
+		if (player.close && player.paperRank <= header.openRank) {
+		  player.close = false;
+		}
+	  });
+
+	}
+
+	// 個別のルールに記載された再計算関数を実行
+	rule.calc(players, header, items, property);
   }
   /*****************************************************************************
    * actions - プレイヤー毎に設定する操作の設定
@@ -224,8 +266,45 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	enable : function(scope) {
 	  return scope.victoryName() != null;
 	},
-	action : function(scope) {
-	  scope.current.header.victoryNameVisible = ! scope.current.header.victoryNameVisible;
+	action0 : function(players, header) {
+	  header.victoryNameVisible = ! header.victoryNameVisible;
+	}
+  },
+  /*****************************************************************************
+   * 順位表示
+   ****************************************************************************/
+  {
+	name : "open",
+	button_css : "btn btn-info",
+	enable0 : function(players, header) {
+	  return header.openRank >= 0;
+	},
+	action0 : function(players, header, property) {
+	  if (players.filter(function(player) {
+		return player.close;
+	  }).length == 0) {
+		header.openRank = -1;
+	  } else {
+		// クローズ状態のプレイヤーの最小順位
+		var closeRank = Math.min.apply(null, players.filter(function(player) {
+		  return player.close;
+		}).map(function(player) {
+		  return player.paperRank;
+		}));
+
+		// クローズ状態のプレイヤーの最小順位が開くための最小閾値
+		var openRank = Math.min.apply(null, property.openRankArray.filter(function(rank) {
+		  return rank >= closeRank;
+		}));
+
+		// openRankが0以上の値の場合
+		if (openRank >= 0 && openRank < Infinity) {
+		  header.openRank = openRank;
+		} else {
+		  header.openRank = -1;
+		}
+	  }
+
 	}
   } ]);
   /*
@@ -289,11 +368,11 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  // action0を実行
 	  action.action0(player, scope.current.players, scope.current.header, scope.property);
 	  // 再計算
-	  calc(scope.current.players, scope.items, scope.property);
+	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
 	  // 勝抜・敗退判定
 	  judgement(scope.current.players, scope.current.header, scope.property);
 	  // 再計算
-	  calc(scope.current.players, scope.items, scope.property);
+	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
 	  // 履歴作成
 	  qCommon.createHist(scope);
 	};
@@ -313,11 +392,11 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 		// action0を実行
 		global_action.action0(scope.current.players, scope.current.header, scope.property);
 		// 再計算
-		calc(scope.current.players, scope.items, scope.property);
+		calc(scope.current.players, scope.current.header, scope.items, scope.property);
 		// 勝抜・敗退判定
 		judgement(scope.current.players, scope.current.header, scope.property);
 		// 再計算
-		calc(scope.current.players, scope.items, scope.property);
+		calc(scope.current.players, scope.current.header, scope.items, scope.property);
 		// 履歴作成
 		qCommon.createHist(scope);
 	  };

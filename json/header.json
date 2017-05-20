@@ -11,5 +11,9 @@
 		"key": "playoff",
 		"value": false,
 		"style": "boolean"
+	}, {
+		"key": "openRank",
+		"value": 0,
+		"style": "number"
 	}
 ]

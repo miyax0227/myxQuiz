@@ -42,11 +42,9 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	invisibleWhenZeroOrNull : true
   }, {
 	key : "position",
-	css : "position",
 	order : []
   }, {
 	key : "priority",
-	css : "priority",
 	order : [ {
 	  key : "status",
 	  order : "desc",
@@ -154,7 +152,7 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
    * @param {Array} players - players
    * @param {Object} items - items
    ****************************************************************************/
-  function calc(players, items, property) {
+  function calc(players, header, items, property) {
 	angular.forEach(players, function(player, index) {
 	  if (player.name == "") {
 		player.name = property.defaultName;

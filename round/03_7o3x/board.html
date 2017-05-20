@@ -5,22 +5,25 @@
 		<link rel="stylesheet" href="../../css/bootstrap.min.css" >
 		<link rel="stylesheet" href="../../css/style.css" >
 		<script src="../../js/libs/angular.min.js"></script>
-		<script src="../../js/libs/angular-cookies.min.js"></script>
 		<script src="../../js/libs/ngStorage.min.js"></script>
-		<script src="../../js/libs/ui-bootstrap-tpls-0.13.3.min.js"></script>
 		<script src="../../js/libs/angular-animate.min.js"></script>
 		<script src="../../js/libs/angular-resource.min.js"></script>
+		<script src="../../js/libs/ui-bootstrap-tpls-0.13.3.min.js"></script>
 
 		<script src="../../js/app.js"></script>
 		<script src="../../js/controller/main.js"></script>
 		<script src="../../js/factory/qcommon.js"></script>
 		<script src="../../js/factory/round.js"></script>
+		<!-- ルール設定 ここから(ruleフォルダ内のjsファイルを1つだけ選択すること) -->
 		<script src="../../js/rule/nomx.js"></script>
+		<!-- ルール設定 ここまで-->
 	</head>
 
 	<body ng-controller="main" ng-keydown="keyDown($event)">
 		<div scoreboard>
+　　　		<!-- 優勝画面 ここから(優勝画面が不要な場合は<div victory></div>をコメント化すること) -->
 			<div victory></div>
+　　　		<!-- 優勝画面 ここまで -->
 			<div players></div>
 			<div global-actions></div>
 		</div>

@@ -14,8 +14,8 @@ app.factory('fileResource', function($resource) {
   return [
   // header.json - 履歴情報のうち、playerに依らない全体的な情報の定義
   $resource('../../json/header.json')
-  // rule.json - クイズのルールの中で、可変な値の設定
-  , $resource('./rule.json')
+  // property.json - クイズのルールの中で、可変な値の設定(ラウンド毎に設定)
+  , $resource('./property.json')
   // item.json - プレイヤーの属性の定義
   , $resource('../../json/item.json')
   // name.json - 名前・初期値の定義
@@ -23,5 +23,7 @@ app.factory('fileResource', function($resource) {
   // window.json - ウィンドウサイズの定義
   , $resource('../../json/window.json')
   // keyboard.json - キーボード入力の定義
-  , $resource('../../json/keyboard.json') ];
+  , $resource('../../json/keyboard.json')
+  // property.json - クイズのルールの中で、可変な値の設定(共通、ラウンド毎に設定がないプロパティを補完)
+  , $resource('../../json/property.json') ];
 });

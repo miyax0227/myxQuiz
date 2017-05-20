@@ -79,7 +79,7 @@ app
 			   * 履歴を作成する
 			   * 
 			   * @memberOf qCommon
-			   * @param {Object} scope - $scope
+			   * @param {object} scope - $scope
 			   ****************************************************************/
 			  function createHist(scope) {
 				// historyの末尾にcurrentのコピーを追加
@@ -206,8 +206,8 @@ app
 			   * playerのソート用関数
 			   * 
 			   * @memberOf qCommon
-			   * @param {Array. <object>} order - key:比較対象属性名
-			   *            order:昇順(asc)/降順(desc) alter:置換文字列
+			   * @param {object[]} order - key:比較対象属性名 order:昇順(asc)/降順(desc)
+			   *            alter:置換文字列
 			   * @param {boolean} position - 比較結果が同等の場合、初期位置で比較を行うか
 			   * @param {object} scope - $scope
 			   * @return {function} 評価関数
@@ -364,7 +364,7 @@ app
 					var hist = $localStorage.$default(defaultObj);
 					refreshCurrent(hist[getRoundName()], scope);
 					scope.timer = scope.$storage[getRoundName()].timer;
-					
+
 					// localStorage内ではdate型を扱えないので変換
 					if (scope.timer['destination'] != null) {
 					  scope.timer['destination'] = new Date(scope.timer['destination']);
@@ -772,7 +772,7 @@ app
 				if (scope.current.players.filter(function(player) {
 				  return player.rank == 1;
 				}).length == 1) {
-				  return  scope.current.players.filter(function(player) {
+				  return scope.current.players.filter(function(player) {
 					return player.rank == 1;
 				  })[0].name;
 				} else {

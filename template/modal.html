@@ -28,8 +28,7 @@
         <td ng-repeat="item in defaultHeader">
         <input ng-if="item.style == 'string'" ng-model="current.header[item.key]" id="key" class="form-control"/>
         <input ng-if="item.style == 'number'" ng-model="current.header[item.key]" id="key" type="number" class="form-control number" />
-        <p ng-if="item.style == 'boolean'">
-          {{current.header[item.key]}}
+        <input ng-if="item.style == 'boolean'" ng-model="current.header[item.key]" id="key" type="checkbox" class="form-control" />
         </p></td>
       </tr>
     </table>
@@ -56,6 +55,7 @@
         <td class="number">{{$index+1}}</td>
         <td ng-repeat="item in items| with: 'value'" ng-if="item.hasOwnProperty('style')">
         <input ng-if="item.style == 'string'" ng-model="player[item.key]" id="{{item.key}}" class="form-control" />
+        <input ng-if="item.style == 'boolean'" ng-model="player[item.key]" id="{{item.key}}" class="form-control" type="checkbox" />
         <input ng-if="item.style == 'number'" ng-model="player[item.key]" id="{{item.key}}" type="number" class="form-control number" />
         <input ng-if="item.style == 'typeahead'" ng-model="player[item.key]" id="{{item.key}}" type="text" typeahead="pref for pref in item.option | filter:$viewValue | limitTo:8" class="form-control" />
         <select ng-if="item.style == 'select'" ng-model="player[item.key]" id="{{item.key}}" ng-options="status for status in item.option" type="text" class="form-control" ></select></td>
