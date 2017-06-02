@@ -1,0 +1,47 @@
+<div class=" modal-dialog modal-lg">
+  <div class="modal-header navbar">
+    <form>
+      <table class="table table-condensed">
+        <tr>
+          <th ng-repeat="item in items | with: 'profile'"> {{item.key}} </th>
+        </tr>
+        <tr>
+          <td ng-repeat="item in items | with: 'profile'">
+          <input class="form-control" ng-model="selectPlayer[item.key]" ng-init="selectPlayer[item.key]=''">
+          </input> </th>
+        </tr>
+      </table>
+      <div class="text-center">
+        <div class="btn-toolbar">
+          <button class="btn btn-info" ng-click="filterPlayer(nameList, selectPlayer)">
+            Search
+          </button>
+          <button class="btn btn-warning" ng-click="clearPlayer(selectPlayer)">
+            Clear
+          </button>
+          <button class="btn btn-success" ng-click="modalOK()">
+            OK
+          </button>
+          <button class="btn btn-danger" ng-click="modalCancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-body">
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th ng-repeat="item in items | with: 'profile'"><a href="#" ng-click="sortOrder=!sortOrder;sortPlayer(nameList, item.key, sortOrder, item.style)"> {{item.key}} </a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="participant in nameList" ng-if="! participant['filtered']" ng-click="setPlayer(participant, selectPlayer)" style="cursor: pointer">
+          <td ng-repeat="item in items | with: 'profile'"> {{participant[item.key]}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

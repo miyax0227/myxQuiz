@@ -1,35 +1,61 @@
 <!doctype html>
 <html ng-app="myxQuiz">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="css/bootstrap.min.css" >
-		<script src="js/libs/angular.min.js"></script>
-		<script src="js/libs/ngStorage.min.js"></script>
-		<script src="js/libs/ui-bootstrap-tpls-0.13.3.min.js"></script>
-		<script src="js/libs/angular-animate.min.js"></script>
-		<script src="js/libs/angular-resource.min.js"></script>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <script src="js/libs/angular.min.js"></script>
+    <script src="js/libs/ngStorage.min.js"></script>
+    <script src="js/libs/ui-bootstrap-tpls.js"></script>
+    <script src="js/libs/angular-animate.min.js"></script>
+    <script src="js/libs/angular-resource.min.js"></script>
 
-		<script src="js/app.js"></script>
-		<script src="js/controller/index.js"></script>
-	</head>
+    <script src="js/app.js"></script>
+    <script src="js/controller/index.js"></script>
+    <script src="js/factory/qfile.js"></script>
+  </head>
 
-	<body ng-controller="index">
-		<table class="table">
-			<tr>
-				<th>#</th>
-				<th>ラウンド名</th>
-				<th>問目</th>
-				<th><a href="javascript:void(0);" ng-click="initialize()">初期化</a></th>
-			</tr>
-			<tr ng-repeat="round in rounds">
-				<td> {{rounds.indexOf(round)}} </td>
-				<td><a target="_blank" ng-click="round.click()" href="javascript:void(0);">{{round.name}}</a></td>
-				<td> {{round.qCount}} </td>
-				<td>
-				<button class="btn btn-sm" ng-disabled="! round.initializable" ng-click="round.initialize()">
-					初期化
-				</button></td>
-			</tr>
-		</table>
-	</body>
+  <body ng-controller="index">
+    <table class="table table-condensed">
+      <tr>
+        <th>#</th>
+        <th>ラウンド名</th>
+        <th>問目</th>
+        <th><a href="javascript:void(0);" ng-click="initialize()">初期化</a></th>
+      </tr>
+      <tr>
+        <th>-</th>
+        <th>nameList</th>
+        <th><a href="javascript:void(0);" ng-click="openNameList()">読込</a></th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="round in rounds">
+        <td> {{rounds.indexOf(round)}} </td>
+        <td><a target="_blank" ng-click="round.click()" href="javascript:void(0);">{{round.name}}</a></td>
+        <td> {{round.qCount}} </td>
+        <td><a href="javascript:void(0);" ng-click="round.initialize()" ng-if="round.initializable">初期化</a></td>
+      </tr>
+    </table>
+    <div class="text-center">
+      <div class="btn-toolbar">
+        <button class="btn btn-info btn" ng-click="saveJsonFile()" ng-if="tableTitle != null">
+          保存
+        </button>
+        <button class="btn btn-danger btn" ng-click="cancelJsonFile()" ng-if="tableTitle != null">
+          キャンセル
+        </button>
+        <div ng-if="tableTitle != null">
+          {{tableFilename}}
+        </div>
+      </div>
+    </div>
+    <table class="table table-condensed">
+      <tr>
+        <th ng-repeat="head in tableHead"> {{head}} </th>
+      </tr>
+      <tr ng-repeat="content in tableContent">
+        <td ng-repeat="head in tableHead"> {{content[head]}} </td>
+      </tr>
+    </table>
+
+  </body>
 </html>

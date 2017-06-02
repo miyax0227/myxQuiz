@@ -9,5 +9,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {  }
+  "dependencies": {"xlsx":"0.10.3" }
 }

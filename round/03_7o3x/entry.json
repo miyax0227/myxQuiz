@@ -1,0 +1,5 @@
+{
+	"source": "nameList",
+	"filter": "paperRank>=8",
+	"order": ["paperRank"]
+}

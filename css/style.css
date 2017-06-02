@@ -12,24 +12,38 @@ body {
     text-align: right;
 }
 
-table.players {
-    width: 800px;
+
+div.modal{
+	width: 100%;
+	margin-left: 0%;
+	margin-right: 0%;
 }
 
-input#name {
-    width: 100px;
+table.players th {
+    text-align: center;
 }
 
-input#pref {
-    width: 80px;
+table.players td.index {
+    text-align: center;
 }
 
-input.number {
-    width: 65px;
+table.players td.profile {
+    text-align: center;
+    width: 150px;
 }
 
-select#status {
-    width: 100px;
+table.players td#status{
+	width:100px;
+}
+
+table.players td#add{
+	width:20px;
+}
+table.players td#del{
+	width:20px;
+}
+table.players td#index{
+	width:20px;
 }
 
 tr.ng-enter {
@@ -150,7 +164,18 @@ div.player {
     transition: 1s;
 }
 
-div.player div.open{
+div.player.ng-enter {
+    transition: 0s;
+}
+
+div.player.ng-leave {
+    transition: 0s;
+}
+
+div.player.ng-move {
+}
+
+div.player div.open {
     position: absolute;
     width: 200px;
     height: 1000px;
@@ -160,7 +185,7 @@ div.player div.open.ng-enter {
     -webkit-transition: all cubic-bezier(0.6, 0, 0.6, 0) 0.5s;
     -webkit-transform: rotateY(-90deg);
     opacity: 0;
-    -webkit-transform-origin: 0px  0px;
+    -webkit-transform-origin: 0px 0px;
 }
 div.player div.open.ng-enter.ng-enter-active {
     -webkit-transform: rotateY(0deg);
@@ -168,36 +193,32 @@ div.player div.open.ng-enter.ng-enter-active {
     -webkit-transform-origin: 0px 0px;
 }
 
-div.player div.overRect{
+div.player div.overRect {
     position: absolute;
     width: 200px;
     height: 1000px;
 }
 
-div.player div.overRect div.overRectBlind{
+div.player div.overRect div.overRectBlind {
     position: absolute;
     width: 60px;
     height: 250px;
     left: -30px;
     top: -125px;
     background-color: rgba(127,127,127,1);
-	
 }
 
 div.player div.overRect.ng-leave {
     -webkit-transition: all cubic-bezier(0.4, 1, 0.4, 1) 0.5s;
     -webkit-transform: rotateY(0deg);
     opacity: 1;
-    -webkit-transform-origin: 0px  0px;
+    -webkit-transform-origin: 0px 0px;
 }
 
 div.player div.overRect.ng-leave.ng-leave-active {
     -webkit-transform: rotateY(90deg);
     opacity: 0;
     -webkit-transform-origin: 0px 0px;
-}
-
-div.player.ng-move {
 }
 
 div.player div.name {
