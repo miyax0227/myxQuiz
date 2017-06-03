@@ -110,7 +110,8 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
    ****************************************************************************/
   {
 	name : "thru",
-	button_css : "btn btn-info",
+	button_css : "btn btn-default",
+	group : "rule",
 	keyboard : "Space",
 	enable0 : function(players, header) {
 	  return true;

@@ -140,7 +140,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
    ****************************************************************************/
   {
 	name : "view",
-	button_css : "btn btn-danger",
+	button_css : "btn btn-primary",
+	group : "basic",
 	enable : function(scope) {
 	  return true;
 	},
@@ -153,7 +154,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
    ****************************************************************************/
   {
 	name : "edit",
-	button_css : "btn btn-danger",
+	button_css : "btn btn-primary",
+	group : "basic",
 	enable : function(scope) {
 	  return true;
 	},
@@ -167,6 +169,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "undo",
 	button_css : "btn btn-danger",
+	group : "history",
 	keyboard : "Left",
 	enable : function(scope) {
 	  return (scope.history.length >= 2);
@@ -188,6 +191,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "redo",
 	button_css : "btn btn-danger",
+	group : "history",
 	keyboard : "Right",
 	enable : function(scope) {
 	  return (scope.redoHistory.length > 0);
@@ -210,6 +214,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "start/reset",
 	button_css : "btn btn-success",
+	group : "timer",
 	enable : function(scope) {
 	  return (scope.timer.destination == null);
 	},
@@ -231,6 +236,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "stop/restart",
 	button_css : "btn btn-success",
+	group : "timer",
 	enable : function(scope) {
 	  return scope.timer.working;
 	},
@@ -250,6 +256,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "show/hide",
 	button_css : "btn btn-success",
+	group : "timer",
 	enable : function(scope) {
 	  return true;
 	},
@@ -261,13 +268,14 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
    * 優勝者名の表示/非表示
    ****************************************************************************/
   {
-	name : "victory",
+	name : "award",
 	button_css : "btn btn-info",
+	group : "view",
 	enable : function(scope) {
 	  return scope.victoryName() != null;
 	},
 	action0 : function(players, header) {
-	  header.victoryNameVisible = ! header.victoryNameVisible;
+	  header.victoryNameVisible = !header.victoryNameVisible;
 	}
   },
   /*****************************************************************************
@@ -276,6 +284,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
   {
 	name : "open",
 	button_css : "btn btn-info",
+	group : "view",
+	keyboard : "S+Right",
 	enable0 : function(players, header) {
 	  return header.openRank >= 0;
 	},
@@ -306,57 +316,218 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  }
 
 	}
-  } ]);
-  /*
-   * , ここから↓は工事中 { name : "normal", button_css : "btn btn-warning", enable :
-   * function() { return (header.playoff); }, action : function() {
-   * header.playoff = false; players.filter(function(player) { return
-   * (player.status == "wait"); }).map(function(player) { player.status =
-   * "normal"; calc(); }); } }, { name : "playoff", button_css : "btn
-   * btn-warning", enable : function() { return (!header.playoff); }, action :
-   * function() { header.playoff = true; calc(); } }, { name : "position",
-   * button_css : "btn btn-info", enable : function() { return (header.orderMode !=
-   * "position"); }, action : function() { header.orderMode = "position"; } }, {
-   * name : "priority", button_css : "btn btn-info", enable : function() {
-   * return (header.orderMode != "priority"); }, action : function() {
-   * header.orderMode = "priority"; } }, { name : "judge-upper", button_css :
-   * "btn btn-danger", enable : function() { return (!header.playoff); }, action :
-   * function() { var priority = "priority"; var borderPlayers = []; var
-   * keyPriority = Math.min.apply(null, players.filter(function(player) { return
-   * (["normal", "wait", "absent"].indexOf(player.status) >= 0);
-   * }).map(function(player) { return player[priority]; })); if (keyPriority ===
-   * null) { return; } var keyPriorityPlayer = players.filter(function(player) {
-   * return (player[priority] == keyPriority); })[0]; borderPlayers =
-   * players.filter(function(player) { return (["normal", "wait",
-   * "absent"].indexOf(player.status) >= 0); }).filter(function(player) { return
-   * (qCommon.playerSortOn($scope.items.filter(function(item) { return (item.key ==
-   * priority); })[0].order,false,$scope)(keyPriorityPlayer, player) == 0); });
-   * if (borderPlayers.length == 1) { win(borderPlayers[0]);
-   * qCommon.createHist($scope); } else if (borderPlayers.length >= 2) {
-   * players.filter(function(player) { return (["normal", "wait",
-   * "absent"].indexOf(player.status) >= 0); }).map(function(player) { if
-   * (borderPlayers.indexOf(player) < 0) { player.status = "wait"; } });
-   * header.playoff = true; qCommon.createHist($scope); } } }, { name :
-   * "judge-lower", button_css : "btn btn-danger", enable : function() { return
-   * (!header.playoff); }, action : function() { var priority = "priority"; var
-   * borderPlayers = []; var keyPriority = Math.max.apply(null,
-   * players.filter(function(player) { return (["normal", "wait",
-   * "absent"].indexOf(player.status) >= 0); }).map(function(player) { return
-   * player[priority]; })); if (keyPriority === null) { return; } var
-   * keyPriorityPlayer = players.filter(function(player) { return
-   * (player[priority] == keyPriority); })[0]; borderPlayers =
-   * players.filter(function(player) { return (["normal", "wait",
-   * "absent"].indexOf(player.status) >= 0); }).filter(function(player) { return
-   * (qCommon.playerSortOn($scope.items.filter(function(item) { return (item.key ==
-   * priority); })[0].order,false,$scope)(keyPriorityPlayer, player) == 0); });
-   * if (borderPlayers.length == 1) { lose(borderPlayers[0]);
-   * qCommon.createHist($scope); } else if (borderPlayers.length >= 2) {
-   * players.filter(function(player) { return (["normal", "wait",
-   * "absent"].indexOf(player.status) >= 0); }).map(function(player) { if
-   * (borderPlayers.indexOf(player) < 0) { player.status = "wait"; } });
-   * header.playoff = true; qCommon.createHist($scope); } } }
-   */
+  },
+  /*****************************************************************************
+   * プレーオフ終了
+   ****************************************************************************/
+  {
+	name : "regular",
+	button_css : "btn btn-warning",
+	group : "playoff",
+	enable0 : function(players, header) {
+	  return (header.playoff);
+	},
+	action0 : function(players, header, property) {
+	  qCommon.playoffoff(players, header);
+	}
+  },
+  /*****************************************************************************
+   * プレーオフ開始
+   ****************************************************************************/
+  {
+	name : "playoff",
+	button_css : "btn btn-warning",
+	group : "playoff",
+	enable0 : function(players, header) {
+	  return (!header.playoff);
+	},
+	action0 : function(players, header, property) {
+	  header.playoff = true;
+	}
+  },
+  /*****************************************************************************
+   * 上位判定
+   ****************************************************************************/
+  {
+	name : "upper",
+	button_css : "btn btn-warning",
+	group : "playoff",
+	keyboard : "S+Up",
+	enable0 : function(players, header) {
+	  return true;
+	},
+	action : function(scope) {
+	  var header = scope.current.header;
+	  var players = scope.current.players;
+	  var property = scope.property;
 
+	  // 現在プレーオフモードの場合
+	  if (header.playoff) {
+
+		// 通常状態のプレイヤーは全員勝ち抜け
+		players.filter(function(player) {
+		  return ([ "normal" ].indexOf(player.status) >= 0);
+		}).map(function(player) {
+		  win(player, players);
+		});
+
+		// プレーオフ終了
+		qCommon.playoffoff(players, header);
+
+	  } else {
+		// 優先順位のキー項目名
+		var priority = "priority";
+
+		// ボーダー上のプレイヤーリスト
+		var borderPlayers = [];
+
+		// ボーダー上のプレイヤーの優先順位キー
+		var keyPriority = Math.min.apply(null, players.filter(function(player) {
+		  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		}).map(function(player) {
+		  return player[priority];
+		}));
+
+		// 優先順位を取得できない場合は上位判定しない
+		if (keyPriority === null) {
+		  return;
+		}
+
+		// ボーダー上のプレイヤーを取得（この時点ではボーダー上のプレイヤーは一人とは限らない）
+		var keyPriorityPlayer = players.filter(function(player) {
+		  return (player[priority] == keyPriority);
+		})[0];
+
+		// ボーダー上のプレイヤーと比較同位のプレイヤーリストを取得
+		borderPlayers = players.filter(function(player) {
+		  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		}).filter(function(player) {
+		  return (qCommon.playerSortOn(scope.items.filter(function(item) {
+			return (item.key == priority);
+		  })[0].order, false, scope)(keyPriorityPlayer, player) == 0);
+		});
+
+		// ボーダー上のプレイヤーが一人だけの場合
+		if (borderPlayers.length == 1) {
+		  // そのプレイヤーは勝ち抜け
+		  win(borderPlayers[0], players);
+
+		  // ボーダー上のプレイヤーが二人以上の場合
+		} else if (borderPlayers.length >= 2) {
+
+		  // ボーダー上にいないプレイヤーを待機状態にする
+		  players.filter(function(player) {
+			return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		  }).map(function(player) {
+			if (borderPlayers.indexOf(player) < 0) {
+			  player.status = "wait";
+			}
+		  });
+
+		  // プレーオフスタート
+		  header.playoff = true;
+		}
+	  }
+	  // 再計算
+	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
+	  // 履歴作成
+	  qCommon.createHist(scope);
+
+	}
+  },
+  /*****************************************************************************
+   * 下位判定
+   ****************************************************************************/
+  {
+	name : "lower",
+	button_css : "btn btn-warning",
+	group : "playoff",
+	keyboard : "S+Down",
+	enable0 : function(players, header) {
+	  return true;
+	},
+	action : function(scope) {
+	  var header = scope.current.header;
+	  var players = scope.current.players;
+	  var property = scope.property;
+
+	  // 現在プレーオフモードの場合
+	  if (header.playoff) {
+
+		// 通常状態のプレイヤーは全員失格(逆順に)
+		var losePlayers = players.filter(function(player) {
+		  return ([ "normal" ].indexOf(player.status) >= 0);
+		});
+		losePlayers.reverse();
+		losePlayers.map(function(player) {
+		  lose(player, players);
+		});
+
+		// プレーオフ終了
+		qCommon.playoffoff(scope.current.players, scope.current.header);
+
+	  } else {
+		// 優先順位のキー項目名
+		var priority = "priority";
+
+		// ボーダー上のプレイヤーリスト
+		var borderPlayers = [];
+
+		// ボーダー上のプレイヤーの優先順位キー
+		var keyPriority = Math.max.apply(null, players.filter(function(player) {
+		  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		}).map(function(player) {
+		  return player[priority];
+		}));
+
+		// 優先順位を取得できない場合は上位判定しない
+		if (keyPriority === null) {
+		  return;
+		}
+
+		// ボーダー上のプレイヤーを取得（この時点ではボーダー上のプレイヤーは一人とは限らない）
+		var keyPriorityPlayer = players.filter(function(player) {
+		  return (player[priority] == keyPriority);
+		})[0];
+
+		// ボーダー上のプレイヤーと比較同位のプレイヤーリストを取得
+		borderPlayers = players.filter(function(player) {
+		  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		}).filter(function(player) {
+		  return (qCommon.playerSortOn(scope.items.filter(function(item) {
+			return (item.key == priority);
+		  })[0].order, false, scope)(keyPriorityPlayer, player) == 0);
+		});
+
+		// ボーダー上のプレイヤーが一人だけの場合
+		if (borderPlayers.length == 1) {
+		  // そのプレイヤーは失格
+		  lose(borderPlayers[0], players);
+
+		  // ボーダー上のプレイヤーが二人以上の場合
+		} else if (borderPlayers.length >= 2) {
+
+		  // ボーダー上にいないプレイヤーを待機状態にする
+		  players.filter(function(player) {
+			return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0);
+		  }).map(function(player) {
+			if (borderPlayers.indexOf(player) < 0) {
+			  player.status = "wait";
+			}
+		  });
+
+		  // プレーオフスタート
+		  header.playoff = true;
+		}
+	  }
+
+	  // 再計算
+	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
+	  // 履歴作成
+	  qCommon.createHist(scope);
+
+	}
+  } ]);
   /*****************************************************************************
    * actions - プレイヤー毎に設定する操作の設定(ラッピング)
    ****************************************************************************/

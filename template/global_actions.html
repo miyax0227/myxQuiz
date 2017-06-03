@@ -1,5 +1,47 @@
-<div class="global_actions" ng-if="! viewMode()">
-	<button ng-repeat="action in global_actions" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
-		{{action.name}}
-	</button>
+<div class="global_actions container" ng-if="! viewMode()">
+  <div class="row">
+    <div class="col-xs-3">
+      <span class="label label-primary">Basic</span>
+      <br>
+      <span class="btn-group">
+        <button ng-repeat="action in global_actions | group: 'basic'" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+          {{action.name}}
+        </button> </span>
+    </div>
+    <div class="col-xs-9">
+      <span class="label label-default">Rule</span>
+      <br>
+      <span class="btn-group">
+        <button ng-repeat="action in global_actions | group: 'rule'" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+          {{action.name}}
+        </button> </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      <span class="label label-info">View</span>
+      <br>
+      <div class="btn-group" role="group">
+        <button type="button" ng-repeat="action in global_actions | group: 'view'" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+          {{action.name}}
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <span class="label label-danger">History</span>
+      <br>
+      <span class="btn-group">
+        <button ng-repeat="action in global_actions | group: 'history'" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+          {{action.name}}
+        </button> </span>
+    </div>
+    <div class="col-xs-6">
+      <span class="label label-warning">Playoff</span>
+      <br>
+      <span class="btn-group">
+        <button ng-repeat="action in global_actions | group: 'playoff'" ng-class="action.button_css" ng-click="func_scope(action.action)" ng-disabled="! func_scope(action.enable)">
+          {{action.name}}
+        </button> </span>
+    </div>
+  </div>
 </div>

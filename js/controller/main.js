@@ -35,6 +35,14 @@ app
   }
 })
 
+.directive('timerActions', function() {
+  return {
+	restrict : 'A',
+	transclude : false,
+	templateUrl : '../../template/timer_actions.html'
+  }
+})
+
 .directive('scoreboard', function() {
   return {
 	restrict : 'A',
@@ -63,6 +71,16 @@ app
   return function(array, key) {
 	return array.filter(function(one) {
 	  return one.hasOwnProperty(key);
+	});
+  };
+})
+
+.filter('group', function() {
+  return function(array, key) {
+	if (array == null || array == undefined)
+	  return null;
+	return array.filter(function(one) {
+	  return one.hasOwnProperty('group') && one.group == key;
 	});
   };
 })
@@ -239,28 +257,29 @@ app
 
 		} ])
 
-.controller('modal', [ '$scope', 'qCommon', '$uibModalInstance', function($scope, qCommon, $uibModalInstance) {
+.controller('modal',
+	[ '$scope', 'qCommon', '$uibModalInstance', function($scope, qCommon, $uibModalInstance) {
 
-  /* filterPlayer - プレイヤー検索用関数 */
-  $scope.filterPlayer = qCommon.filterPlayer;
+	  /* filterPlayer - プレイヤー検索用関数 */
+	  $scope.filterPlayer = qCommon.filterPlayer;
 
-  /* setPlayer - プレイヤー選択 */
-  $scope.setPlayer = qCommon.setPlayer;
+	  /* setPlayer - プレイヤー選択 */
+	  $scope.setPlayer = qCommon.setPlayer;
 
-  /* clearPlayer - プレイヤー情報削除 */
-  $scope.clearPlayer = qCommon.clearPlayer;
-  
-  /* sortPlayer - プレイヤー並び替え */
-  $scope.sortPlayer = qCommon.sortPlayer;
-  
-  /* modalOK - OKボタン押下 */
-  $scope.modalOK = function(){
-	$uibModalInstance.close();
-  }
-  
-  /* modalCancel - Cancelボタン押下 */
-  $scope.modalCancel = function(){
-	$uibModalInstance.dismiss();
-  }
+	  /* clearPlayer - プレイヤー情報削除 */
+	  $scope.clearPlayer = qCommon.clearPlayer;
 
-} ]);
+	  /* sortPlayer - プレイヤー並び替え */
+	  $scope.sortPlayer = qCommon.sortPlayer;
+
+	  /* modalOK - OKボタン押下 */
+	  $scope.modalOK = function() {
+		$uibModalInstance.close();
+	  }
+
+	  /* modalCancel - Cancelボタン押下 */
+	  $scope.modalCancel = function() {
+		$uibModalInstance.dismiss();
+	  }
+
+	} ]);

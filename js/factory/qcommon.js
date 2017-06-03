@@ -47,6 +47,7 @@ app
 	  qCommonService.setPlayer = setPlayer;
 	  qCommonService.clearPlayer = clearPlayer;
 	  qCommonService.sortPlayer = sortPlayer;
+	  qCommonService.playoffoff = playoffoff;
 	  return qCommonService;
 
 	  /*************************************************************************
@@ -918,6 +919,24 @@ app
 			return 0;
 		  }
 		});
+	  }
+
+	  /*************************************************************************
+	   * プレーオフ終了
+	   * 
+	   * @memberOf qCommon
+	   * @param {object} scope - $scope
+	   ************************************************************************/
+	  function playoffoff(players, header) {
+		// プレーオフ終了
+		header.playoff = false;
+
+		// 待機状態のプレイヤーを通常状態に戻す
+		angular.forEach(players, function(player) {
+		  if (player.status == "wait") {
+			player.status = "normal";
+		  }
+		})
 	  }
 
 	} ]);

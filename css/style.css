@@ -12,11 +12,10 @@ body {
     text-align: right;
 }
 
-
-div.modal{
-	width: 100%;
-	margin-left: 0%;
-	margin-right: 0%;
+div.modal {
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
 }
 
 table.players th {
@@ -32,18 +31,18 @@ table.players td.profile {
     width: 150px;
 }
 
-table.players td#status{
-	width:100px;
+table.players td#status {
+    width: 100px;
 }
 
-table.players td#add{
-	width:20px;
+table.players td#add {
+    width: 20px;
 }
-table.players td#del{
-	width:20px;
+table.players td#del {
+    width: 20px;
 }
-table.players td#index{
-	width:20px;
+table.players td#index {
+    width: 20px;
 }
 
 tr.ng-enter {
@@ -495,23 +494,29 @@ div.player div.action_x {
 div.player div.action_win {
     position: absolute;
     left: -30px;
-    top: 205px;
+    top: 110px;
 }
 div.player div.action_lose {
     position: absolute;
     left: -10px;
-    top: 205px;
+    top: 110px;
 }
 div.player div.action_wait {
     position: absolute;
     left: 10px;
-    top: 205px;
+    top: 110px;
 }
 
 div.global_actions {
     position: absolute;
-    left: 30px;
-    top: 550px;
+    left: 0px;
+    top: 480px;
+}
+
+div.timer_actions {
+    position: absolute;
+    right: 2%;
+    top: 50px;
 }
 
 div.player hr.hr1 {
@@ -532,4 +537,12 @@ div.player hr.hr2 {
     border: 0;
     height: 2px;
     background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,1), rgba(0,0,0,0.5));
+}
+
+.modal-dialog {
+    width: 768px;
+}
+
+.container {
+    width: 750px
 }

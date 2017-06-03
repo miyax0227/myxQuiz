@@ -1,14 +1,17 @@
-<div class="scoreboard" ng-click="adjustWindow()">
-	<div class="title">
-		{{property.title}}
-	</div>
-	<div class="timer" ng-if="timer.visible">
-		{{timerDisplay}}
-	</div>
-	<hr class="hr0" />
-	<div class="qCount" >
-		{{current.header.qCount}}問目
-	</div>
-	<div ng-transclude>
-	</div>
+<div class="scoreboard">
+  <div class="title">
+    {{property.title}}
+  </div>
+  <div class="timer" ng-if="timer.visible">
+    {{timerDisplay}}
+  </div>
+  <hr class="hr0" />
+  <div class="qCount" >
+    {{current.header.qCount}}問目
+    <span ng-if="current.header.playoff"> &nbsp;-&nbsp;プレーオフ </span>
+  </div>
+  <div players></div>
+  <div ng-transclude></div>
+  <div global-actions></div>
+  <div timer-actions></div>
 </div>
