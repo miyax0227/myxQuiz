@@ -1,6 +1,6 @@
 'use strict';
 
-var appName = "myxQuiz";
+var appName = "myxQuizMain";
 var app = angular.module(appName);
 
 /*******************************************************************************
@@ -40,9 +40,6 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	style : "number",
 	css : "x",
 	invisibleWhenZeroOrNull : true
-  }, {
-	key : "position",
-	order : []
   }, {
 	key : "priority",
 	order : [ {

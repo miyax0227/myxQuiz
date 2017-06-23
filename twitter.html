@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="myxQuizTwitter">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <script src="js/libs/angular.min.js"></script>
+    <script src="js/libs/ngStorage.min.js"></script>
+    <script src="js/libs/ui-bootstrap-tpls.js"></script>
+    <script src="js/libs/angular-animate.min.js"></script>
+    <script src="js/libs/angular-resource.min.js"></script>
+    <script src="js/libs/ng-twitter-api.js"></script>
+    <script src="js/libs/sha1.js"></script>
+
+    <script src="js/controller/twitter.js"></script>
+    <script src="js/factory/qtwitter.js"></script>
+  </head>
+
+  <body ng-controller="twitter" style="overflow-x: hidden">
+    <div class="row small">
+      <div class="col-xs-6">
+        <table class="table table-condensed table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>select</th>
+              <th>#</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="account in accounts" ng-click="setAccountNum($index)" style="cursor: pointer">
+              <td><span ng-if="$index == accountNum">&#10003;</span></td>
+              <td>{{$index}}</td>
+              <td>{{account.owner}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-6">
+        <textarea class="form-control" ng-model="newTweet"></textarea>
+        <div class="row">
+          <div class="col-xs-12" ng-if="! tweetId">
+            <button class="form-control btn btn-info btn-sm" ng-click="newTweetSubmit()" ng-if="! tweetId">
+              Tweet
+            </button>
+          </div>
+          <div class="col-xs-6" ng-if="tweetId">
+            <button class="form-control btn btn-danger btn-sm" ng-click="setTweetId(null)" ng-if="tweetId">
+              Cancel
+            </button>
+          </div>
+          <div class="col-xs-6" ng-if="tweetId">
+            <button class="form-control btn btn-warning btn-sm" ng-click="replySubmit()" ng-if="tweetId">
+              Reply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-condensed table-bordered small">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Owner</th>
+          <th>Tweet</th>
+          <th>Date</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="obj in history" ng-class="{danger:(obj.id==null)}" style="cursor: pointer" ng-click="setTweetId(obj.id)">
+          <td>{{$index}}</td>
+          <td>{{obj.owner}}</td>
+          <td>{{obj.tweet}}</td>
+          <td>{{obj.date}}</td>
+          <td>
+          <button class="btn btn-danger btn-xs" ng-click="deleteTweet(obj)" ng-if="obj.id">
+            Delete
+          </button></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

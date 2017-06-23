@@ -1,6 +1,6 @@
 'use strict';
 
-var appName = "myxQuiz";
+var appName = "myxQuizMain";
 var app = angular.module(appName);
 
 /*******************************************************************************

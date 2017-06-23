@@ -1,6 +1,6 @@
 'use strict';
 
-var appName = "myxQuiz";
+var appName = "myxQuizIndex";
 var app = angular.module(appName);
 
 /*******************************************************************************
@@ -33,6 +33,12 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
   windowParameter += ',height=' + windowData[2].height;
   windowParameter += ",left=" + windowData[2].left;
   windowParameter += ",top=" + windowData[2].top;
+
+  var twitterWindowParameter = "";
+  twitterWindowParameter += 'width=' + windowData[3].width;
+  twitterWindowParameter += ',height=' + windowData[3].height;
+  twitterWindowParameter += ",left=" + windowData[3].left;
+  twitterWindowParameter += ",top=" + windowData[3].top;
 
   // roundsを設定
   var rounds = [];
@@ -156,15 +162,15 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
   }
 
   function saveJsonFile(scope) {
-	try{
+	try {
 	  fs.statSync(scope.tableFilename);
 	  var oldFile = scope.tableFilename;
-	  var newFile = scope.tableFilename.replace(/\.json/,"_"+dateString()+".json");
+	  var newFile = scope.tableFilename.replace(/\.json/, "_" + dateString() + ".json");
 	  fs.renameSync(oldFile, newFile);
-	}catch(e){
-	  
+	} catch (e) {
+
 	}
-	
+
 	fs.writeFileSync(scope.tableFilename, JSON.stringify(scope.tableContent));
 	cancelJsonFile(scope);
   }
@@ -180,11 +186,16 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	return $filter('date')(new Date(), 'yyyyMMddHHmmss');
   }
 
+  function twitterWindowOpen() {
+	$window.open("./twitter.html", "Twitter", twitterWindowParameter);
+  }
+
   var qFile = {};
   qFile.rounds = rounds;
   qFile.initialize = initialize;
   qFile.openNameList = openNameList;
   qFile.saveJsonFile = saveJsonFile;
   qFile.cancelJsonFile = cancelJsonFile;
+  qFile.twitterWindowOpen = twitterWindowOpen;
   return qFile;
-} ])
+} ]);

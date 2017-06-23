@@ -1,17 +1,42 @@
 'use strict';
 
-var appName = "myxQuiz";
-var app = angular.module(appName);
+/*******************************************************************************
+ * app - Angularモジュール本体
+ ******************************************************************************/
+var appName = "myxQuizMain";
+var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate", "ngResource",
+	"ngTwitter" ]);
+
+/*******************************************************************************
+ * fileResource - 全てのjsonファイルの読込の同期をとるためのfactory
+ ******************************************************************************/
+app.factory('fileResource', function($resource) {
+  // 読み込むjsonファイルを列挙
+  return [
+  // header.json - 履歴情報のうち、playerに依らない全体的な情報の定義
+  $resource('../../json/header.json')
+  // property.json - クイズのルールの中で、可変な値の設定(ラウンド毎に設定)
+  , $resource('./property.json')
+  // item.json - プレイヤーの属性の定義
+  , $resource('../../json/item.json')
+  // name.json - 名前・初期値の定義
+  , $resource('../../history/current/nameList.json')
+  // window.json - ウィンドウサイズの定義
+  , $resource('../../json/window.json')
+  // keyboard.json - キーボード入力の定義
+  , $resource('../../json/keyboard.json')
+  // property.json - クイズのルールの中で、可変な値の設定(共通、ラウンド毎に設定がないプロパティを補完)
+  , $resource('../../json/property.json') ];
+});
+
 
 /*******************************************************************************
  * main - メインコントローラ
  * 
  * @class
  * @name main
- * @memberOf angular-5o2x.js.controller
  ******************************************************************************/
 app
-
 .config([ "$locationProvider", function($locationProvider) {
   $locationProvider.html5Mode({
 	enabled : true,

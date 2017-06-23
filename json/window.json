@@ -17,5 +17,11 @@
 		"top": 0,
 		"width": 800,
 		"height": 600
+	},{
+	    "explain":"Twitterウィンドウの表示位置",
+		"left": 200,
+		"top": 0,
+		"width": 400,
+		"height": 300
 	}
 ]

@@ -1,7 +1,7 @@
 'use strict';
 
-var appName = "myxQuiz";
-var app = angular.module(appName);
+var appName = "myxQuizIndex";
+var app = angular.module(appName, [ "ui.bootstrap", "ngResource" ]);
 
 /*******************************************************************************
  * index - indexコントローラ
@@ -17,15 +17,15 @@ app
   $scope.tableContent = [];
   $scope.rounds = qFile.rounds;
   $scope.initialize = qFile.initialize;
+  $scope.twitterWindowOpen = qFile.twitterWindowOpen;
+  
   $scope.openNameList = function() {
 	qFile.openNameList($scope);
-	console.log($scope.tableHead);
-	console.log($scope.tableContent);
   }
-  $scope.saveJsonFile = function(){
+  $scope.saveJsonFile = function() {
 	qFile.saveJsonFile($scope);
   }
-  $scope.cancelJsonFile = function(){
+  $scope.cancelJsonFile = function() {
 	qFile.cancelJsonFile($scope);
   }
 
