@@ -1,11 +1,11 @@
 [
 	{
-		"title": "7○3×クイズ",
+		"title": "7◯3×クイズ",
 		"maxRankDisplay": 2,
 		"openRankArray": null,
 		"winningPoint": 7,
 		"losingPoint": 3,
 		"penalty": 8,
-		"defaultName": "no name??"
+		"tweetRoundTitle": "[7◯3×]"
 	}
 ]

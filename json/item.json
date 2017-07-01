@@ -99,4 +99,8 @@
 		"value": true,
 		"style": "boolean"
 	}
+	, {
+		"key": "position",
+		"order": []
+	}
 ]

@@ -48,6 +48,7 @@ app
 	  qCommonService.clearPlayer = clearPlayer;
 	  qCommonService.sortPlayer = sortPlayer;
 	  qCommonService.playoffoff = playoffoff;
+	  qCommonService.editTweet = editTweet;
 	  return qCommonService;
 
 	  /*************************************************************************
@@ -81,6 +82,11 @@ app
 	   * @param {object} scope - $scope
 	   ************************************************************************/
 	  function createHist(scope) {
+		// ツイート内容編集
+		var tweet = constructTweet(scope, scope.current.header.tweets);
+		// tweets初期化
+		scope.current.header.tweets = [];
+		
 		// historyの末尾にcurrentのコピーを追加
 		scope.history.push(angular.copy(scope.current));
 		// currentPageをhistoryの末尾に設定
@@ -88,16 +94,43 @@ app
 		// redoHistoryを初期化
 		scope.redoHistory = [];
 
-		console.log(scope.property);
-		// ログ出力
 		try {
 		  var fs = require('fs');
+		  // ログ出力
 		  fs.writeFile(getHistoryFileName(), angular.toJson(scope.current));
+		  // ツイート出力
+		  fs.writeFile(getTweetFileName(), tweet);
+
 		} catch (e) {
 		  console.log('fs is not supported.');
 		}
 	  }
+	  
+	  /*************************************************************************
+	   * ツイート内容を最終的に編集する
+	   * 
+	   * @memberOf qCommon
+	   * @param {Object} scope - $scope
+	   * @param {array} tweets - 連携したいツイート（リスト形式）
+	   * @return {string} 編集したツイート内容
+	   ************************************************************************/
+	  function constructTweet(scope, tweets) {
+		function dateString() {
+		  return $filter('date')(new Date(), 'HH:mm:ss');
+		}
 
+		var tweet = "";
+		tweet += scope.property.tweetCupTitle || "";
+		tweet += scope.property.tweetRoundTitle || "";
+		tweet += "\n";
+		tweet += tweets.join("\n");
+		tweet += "\n";
+		tweet += " - " + dateString();
+		
+		return tweet;
+		
+	  }
+	  
 	  /*************************************************************************
 	   * playerを追加する
 	   * 
@@ -124,7 +157,7 @@ app
 	   * @param {Object} player - 勝ち抜けたプレイヤー
 	   * @param {Object} players - players
 	   ************************************************************************/
-	  function win(player, players) {
+	  function win(player, players, header, property) {
 		/* rank算出 */
 		var rank = players.filter(function(item) {
 		  return (item.status == 'win');
@@ -134,6 +167,8 @@ app
 		player.status = "win";
 		/* 休みを消す */
 		player.absent = 0;
+		/* tweet */
+		editTweet(header.tweets, property.tweet["win"], player, false);
 	  }
 
 	  /*************************************************************************
@@ -143,7 +178,7 @@ app
 	   * @param {Object} player - 勝ち抜けたプレイヤー
 	   * @param {Object} players - players
 	   ************************************************************************/
-	  function lose(player, players) {
+	  function lose(player, players, header, property) {
 		/* rank算出 */
 		var rank = players.filter(function(item) {
 		  return (item.status != 'lose');
@@ -153,6 +188,8 @@ app
 		player.status = "lose";
 		/* 休みを消す */
 		player.absent = 0;
+		/* tweet */
+		editTweet(header.tweets, property.tweet["lose"], player, false);
 
 	  }
 
@@ -335,7 +372,6 @@ app
 	   * @param {boolean} viewMode - 表示モード
 	   ************************************************************************/
 	  function saveToStorage(scope, viewMode) {
-		console.log(getRoundName());
 		var defaultObj = {};
 		defaultObj[getRoundName()] = {
 		  header : {},
@@ -349,7 +385,6 @@ app
 		scope.current.players = scope.$storage[getRoundName()].players;
 		scope.timer = {};
 		scope.timer = scope.$storage[getRoundName()].timer;
-		console.log(scope.timer);
 
 		if (viewMode) {
 		  // localStorage内ではdate型を扱えないので変換
@@ -575,7 +610,7 @@ app
 	   * @param {object} players プレイヤー情報
 	   * @param {object} header ヘッダ情報
 	   ************************************************************************/
-	  function addQCount(players, header) {
+	  function addQCount(players, header, property) {
 		// 問題数を進める
 		header.qCount++;
 		// 休みの人の対応
@@ -588,6 +623,7 @@ app
 			} else {
 			  player.absent = 0;
 			  player.status = "normal";
+			  editTweet(header.tweets, property.tweet["comeback"], player, false);
 			}
 		  }
 		});
@@ -687,9 +723,24 @@ app
 	   * 履歴ファイル名の取得
 	   * 
 	   * @memberOf qCommon
+	   * @return {string} 履歴ファイル名
 	   ************************************************************************/
 	  function getHistoryFileName() {
 		return __dirname + '/../../history/current/' + getRoundName() + '.json';
+	  }
+
+	  /*************************************************************************
+	   * ツイートファイル名の取得
+	   * 
+	   * @memberOf qCommon
+	   * @return {string} ツイートファイル名
+	   ************************************************************************/
+	  function getTweetFileName() {
+		function dateString() {
+		  return $filter('date')(new Date(), 'yyyyMMddHHmmss');
+		}
+
+		return __dirname + '/../../twitter/' + dateString() + "_" + getRoundName() + '.txt';
 	  }
 
 	  /*************************************************************************
@@ -698,7 +749,7 @@ app
 	   * @memberOf qCommon
 	   * @param {array} players - プレイヤー情報
 	   * @param {array} items - アイテム情報
-	   * @retrn {array} 不足していたアイテム情報が付加されたプレイヤー情報
+	   * @return {array} 不足していたアイテム情報が付加されたプレイヤー情報
 	   ************************************************************************/
 	  function initPlayers(players, items) {
 		var toPlayers = angular.copy(players);
@@ -882,7 +933,6 @@ app
 	   * @param {object} selectPlayer - 検索条件
 	   ************************************************************************/
 	  function sortPlayer(nameList, attribute, order, style) {
-		console.log(attribute);
 		nameList.sort(function(a, b) {
 		  var aa;
 		  var bb;
@@ -937,6 +987,41 @@ app
 			player.status = "normal";
 		  }
 		})
+	  }
+
+	  /*************************************************************************
+	   * ツイート編集
+	   * 
+	   * @memberOf qCommon
+	   * @param {array} tweets - 追加先のツイートリスト
+	   * @param {string} tweet - ツイートのひな型
+	   * @param {object} obj - ツイートの主体となるプレイヤーまたはプレイヤーリストまたはヘッダ情報
+	   * @param {boolean} top - ツイートリストの先頭に追加する場合はtrue, 末尾に追加する場合はfalse
+	   ************************************************************************/
+	  function editTweet(tweets, tweet, obj, top) {
+		// objが指定されていない場合は空オブジェクトを補完
+		if (obj == null) {
+		  obj = {};
+		}
+
+		// topが指定されていない場合はfalse扱いにする
+		if (top == null) {
+		  top = false;
+		}
+
+		// tweet内にある埋め込み文字を置換
+		angular.forEach(obj, function(value, key) {
+		  var reg = new RegExp("\\$\\{" + key + "\\}", "g");
+		  tweet = tweet.replace(reg, value);
+		})
+
+		// tweetsに追加
+		if (top) {
+		  tweets.unshift(tweet);
+		} else {
+		  tweets.push(tweet);
+		}
+
 	  }
 
 	} ]);

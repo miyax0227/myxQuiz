@@ -3,6 +3,7 @@
 		"title": "",
 		"timer": 180,
 		"maxRankDisplay": 2,
-		"openRankArray": null
+		"openRankArray": null,
+		"tweetCupTitle":"[オープン]"
 	}
 ]

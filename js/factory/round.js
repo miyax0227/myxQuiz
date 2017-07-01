@@ -41,6 +41,13 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
    * @param {object} property - プロパティ情報
    ****************************************************************************/
   function calc(players, header, items, property) {
+	// ハンドルネームの設定が無い場合は氏名をコピーする
+	angular.forEach(players, function(player) {
+	  if (!player.hasOwnProperty('handleName')) {
+		player.handleName = player.name;
+	  }
+	});
+
 	// 優先順位の計算
 	angular.forEach(items.filter(function(item) {
 	  return item.hasOwnProperty('order');
@@ -70,7 +77,6 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  // openRankが0以上の場合、openRank以下のpaperRankを持つプレイヤーをopen
 	} else {
 	  angular.forEach(players, function(player) {
-		console.log(player.paperRank, player.close, header.openRank);
 		if (player.close && player.paperRank <= header.openRank) {
 		  player.close = false;
 		}
@@ -80,6 +86,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 
 	// 個別のルールに記載された再計算関数を実行
 	rule.calc(players, header, items, property);
+
   }
   /*****************************************************************************
    * actions - プレイヤー毎に設定する操作の設定
@@ -95,8 +102,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	enable0 : function(player, players, header) {
 	  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0 && header.playoff);
 	},
-	action0 : function(player, players, header) {
-	  qCommon.win(player, players);
+	action0 : function(player, players, header, property) {
+	  qCommon.win(player, players, header, property);
 	  header.qCount++;
 	}
   },
@@ -110,8 +117,8 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	enable0 : function(player, players, header) {
 	  return ([ "normal", "wait", "absent" ].indexOf(player.status) >= 0 && header.playoff);
 	},
-	action0 : function(player, players, header) {
-	  lose(player, players);
+	action0 : function(player, players, header, property) {
+	  lose(player, players, header, property);
 	  header.qCount++;
 	}
   },
@@ -368,7 +375,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 		players.filter(function(player) {
 		  return ([ "normal" ].indexOf(player.status) >= 0);
 		}).map(function(player) {
-		  win(player, players);
+		  win(player, players, header, property);
 		});
 
 		// プレーオフ終了
@@ -410,7 +417,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 		// ボーダー上のプレイヤーが一人だけの場合
 		if (borderPlayers.length == 1) {
 		  // そのプレイヤーは勝ち抜け
-		  win(borderPlayers[0], players);
+		  win(borderPlayers[0], players, header, property);
 
 		  // ボーダー上のプレイヤーが二人以上の場合
 		} else if (borderPlayers.length >= 2) {
@@ -460,7 +467,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 		});
 		losePlayers.reverse();
 		losePlayers.map(function(player) {
-		  lose(player, players);
+		  lose(player, players, header, property);
 		});
 
 		// プレーオフ終了
@@ -502,7 +509,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 		// ボーダー上のプレイヤーが一人だけの場合
 		if (borderPlayers.length == 1) {
 		  // そのプレイヤーは失格
-		  lose(borderPlayers[0], players);
+		  lose(borderPlayers[0], players, header, property);
 
 		  // ボーダー上のプレイヤーが二人以上の場合
 		} else if (borderPlayers.length >= 2) {
@@ -528,6 +535,7 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 
 	}
   } ]);
+
   /*****************************************************************************
    * actions - プレイヤー毎に設定する操作の設定(ラッピング)
    ****************************************************************************/
@@ -536,14 +544,23 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	  return action.enable0(player, scope.current.players, scope.current.header, scope.property);
 	};
 	action.action = function(player, scope) {
+	  var players = scope.current.players;
+	  var header = scope.current.header;
+	  var property = scope.property;
+	  var items = scope.items;
+
 	  // action0を実行
-	  action.action0(player, scope.current.players, scope.current.header, scope.property);
+	  action.action0(player, players, header, property);
 	  // 再計算
-	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
+	  calc(players, header, items, property);
 	  // 勝抜・敗退判定
-	  judgement(scope.current.players, scope.current.header, scope.property);
+	  judgement(players, header, property);
 	  // 再計算
-	  calc(scope.current.players, scope.current.header, scope.items, scope.property);
+	  calc(players, header, items, property);
+	  // ツイート生成
+	  if (action.hasOwnProperty('tweet') && property.tweet.hasOwnProperty(action.tweet)) {
+		qCommon.editTweet(header.tweets, property.tweet[action.tweet], player, true);
+	  }
 	  // 履歴作成
 	  qCommon.createHist(scope);
 	};
@@ -560,19 +577,40 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	}
 	if (angular.isUndefined(global_action.action)) {
 	  global_action.action = function(scope) {
+		var players = scope.current.players;
+		var header = scope.current.header;
+		var property = scope.property;
+		var items = scope.items;
+
 		// action0を実行
-		global_action.action0(scope.current.players, scope.current.header, scope.property);
+		global_action.action0(players, header, property);
 		// 再計算
-		calc(scope.current.players, scope.current.header, scope.items, scope.property);
+		calc(players, header, items, property);
 		// 勝抜・敗退判定
-		judgement(scope.current.players, scope.current.header, scope.property);
+		judgement(players, header, property);
 		// 再計算
-		calc(scope.current.players, scope.current.header, scope.items, scope.property);
+		calc(players, header, items, property);
+		// ツイート生成
+		if (global_action.hasOwnProperty('tweet')) {
+		  if (property.tweet.hasOwnProperty(global_action.tweet)) {
+			qCommon.editTweet(header.tweets, property.tweet[global_action.tweet], header, true);
+		  }
+		}
 		// 履歴作成
 		qCommon.createHist(scope);
+
 	  };
 	}
   });
+
+  /*****************************************************************************
+   * setTweet - ruleに設定されたtweetのひな型を反映する
+   ****************************************************************************/
+  round.setTweet = function(tweet) {
+	angular.forEach(rule.tweet, function(value, key) {
+	  tweet[key] = value;
+	});
+  }
 
   return round;
 } ]);

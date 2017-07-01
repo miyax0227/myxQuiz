@@ -1,22 +1,22 @@
 [
 	{
-		"o": "[handleName]◯　→[o]◯ [x]×",
-		"x": "[handleName]×　→[o]◯ [x]×",
-		"lot": "第[nowLot]組",
+		"o": "${handleName}◯　→${o}◯ ${x}×",
+		"x": "${handleName}×　→${o}◯ ${x}×",
+		"lot": "第${nowLot}組",
 		"thru": "スルー",
-		"win": "[handleName]勝抜！ [rank]位",
-		"lose": "[handleName]失格！",
-		"comeback": "[handleName]復帰",
+		"win": "${handleName}勝抜！ ${rank}位",
+		"lose": "${handleName}失格！",
+		"comeback": "${handleName}復帰",
 		"playoff": "プレーオフ開始",
 		"playoffoff": "プレーオフ終了",
-		"chance": "リーチ：[handleNames]",
-		"pinch": "トビリーチ：[handleNames]",
-		"double": "ダブリー：[handleNames]",
-		"boardright": "正解:[handleNames]",
-		"mode": "変数変更：[variant]",
+		"chance": "リーチ：${handleNames}",
+		"pinch": "トビリーチ：${handleNames}",
+		"double": "ダブリー：${handleNames}",
+		"boardright": "正解:${handleNames}",
+		"mode": "変数変更：${variant}",
 		"undo": "操作ミスのため巻き戻し",
-		"set": "第[qSet]セット",
-		"push": "[handleName]押下",
-		"alter": "補充:[handleName]"
+		"set": "第${qSet}セット",
+		"push": "${handleName}押下",
+		"alter": "補充:${handleName}"
 	}
 ]

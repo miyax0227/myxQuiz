@@ -25,7 +25,7 @@
     <img ng-class="player[item.key]" ng-src="../../img/{{item.css_img_file[player[item.key]]}}" ng-if="item.css_img_file.hasOwnProperty(player[item.key]) && item.key != 'rank'"></img>
     <img ng-class="rank" ng-src="../../img/{{item.css_img_file[player['rank']]}}" ng-if="item.css_img_file.hasOwnProperty(player['rank']) && player['rank'] <= property.maxRankDisplay"></img>
   </div>
-  <div ng-repeat="action in actions" ng-class="action.css" ng-if="! viewMode()">
+  <div ng-repeat="action in actions" ng-class="action.css" ng-if="! viewMode">
     <button ng-click="func_player_scope(action.action, player)" ng-class="action.button_css" ng-disabled="! func_player_scope(action.enable,player)">
       {{action.name}}
     </button>

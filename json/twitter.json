@@ -1,0 +1,19 @@
+{
+	"accounts": [
+		{
+			"consumerKey": "R7oKAXvqycwjAoMMqVaMkKNRG",
+			"consumerSecret": "PppAy7yWIzPgkHtbAUEHPGkrGWloUnqqjGLAxSg5BdDNLyVIQ2",
+			"accessToken": "704989891285749760-4FnGUPH4qJMxs3Qd0HQNvaFSiea9YSB",
+			"accessTokenSecret": "6V9Tp25aWUkmQ20JZqDlDPqQ4L3TZuqj5uISz7X1uo5nk",
+			"owner": "kachinukehai_4",
+			"ownerId": "704989891285749760"
+		}, {
+			"consumerKey": "niTByZ1Bc2q8Ja5BO9vgoQrPB",
+			"consumerSecret": "kXBCXc8w99x11cj5w8m506uEZrzi1im0rHWW6jUlAYxEs0Y6hZ",
+			"accessToken": "703632418834518017-6M8Eu9RcyECJ1GYxrILbbYBC6UAjrQv",
+			"accessTokenSecret": "T8oCScLix9PJite06IcxlMLEENciohwvwJEAwOvoD5M1I",
+			"owner": "myxpoint",
+			"ownerId": "703632418834518017"
+		}
+	]
+}

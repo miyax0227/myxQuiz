@@ -22,6 +22,8 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
   browserWindow = remote.BrowserWindow;
   const
   xlsx = require('xlsx');
+  const
+  shell = require('electron').shell;
 
   // excel.jsonからウィンドウサイズを取得
   var excelProperty = JSON.parse(fs.readFileSync(__dirname + '/json/excel.json', 'utf-8'));
@@ -189,6 +191,10 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
   function twitterWindowOpen() {
 	$window.open("./twitter.html", "Twitter", twitterWindowParameter);
   }
+  
+  function openFolder(){
+	shell.openItem(__dirname);
+  }
 
   var qFile = {};
   qFile.rounds = rounds;
@@ -197,5 +203,6 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
   qFile.saveJsonFile = saveJsonFile;
   qFile.cancelJsonFile = cancelJsonFile;
   qFile.twitterWindowOpen = twitterWindowOpen;
+  qFile.openFolder = openFolder;
   return qFile;
 } ]);

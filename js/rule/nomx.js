@@ -56,6 +56,14 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
   } ];
 
   /*****************************************************************************
+   * tweet - ルール固有のツイートのひな型
+   ****************************************************************************/
+  rule.tweet = {
+	o : "${handleName}◯　→${o}◯ ${x}×",
+	x : "${handleName}×　→${o}◯ ${x}× ${absent}休"
+  };
+
+  /*****************************************************************************
    * actions - プレイヤー毎に設定する操作の設定
    ****************************************************************************/
   rule.actions = [
@@ -73,8 +81,9 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	action0 : function(player, players, header, property) {
 	  setMotion(player, "o");
 	  player.o++;
-	  addQCount(players, header);
-	}
+	  addQCount(players, header, property);
+	},
+	tweet : "o"
   },
   /*****************************************************************************
    * 誤答時
@@ -94,8 +103,9 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 		player.absent = property.penalty;
 		player.status = "preabsent";
 	  }
-	  addQCount(players, header);
-	}
+	  addQCount(players, header, property);
+	},
+	tweet : "x"
   } ];
 
   /*****************************************************************************
@@ -113,9 +123,10 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	enable0 : function(players, header) {
 	  return true;
 	},
-	action0 : function(players, header) {
-	  addQCount(players, header);
-	}
+	action0 : function(players, header, property) {
+	  addQCount(players, header, property);
+	},
+	tweet : "thru"
   } ];
 
   /*****************************************************************************
@@ -133,12 +144,12 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
 	  /* win条件 */
 	  if (player.o >= property.winningPoint) {
 
-		win(player, players);
+		win(player, players, header, property);
 		player.o = property.winningPoint;
 	  }
 	  /* lose条件 */
 	  if (player.x >= property.losingPoint) {
-		lose(player, players);
+		lose(player, players, header, property);
 		player.x = property.losingPoint;
 	  }
 	});
@@ -152,9 +163,6 @@ app.factory('rule', [ 'qCommon', function(qCommon) {
    ****************************************************************************/
   function calc(players, header, items, property) {
 	angular.forEach(players, function(player, index) {
-	  if (player.name == "") {
-		player.name = property.defaultName;
-	  }
 	  // キーボード入力時の配列の紐付け ローリング等の特殊形式でない場合はこのままでOK
 	  player.keyIndex = index;
 	});

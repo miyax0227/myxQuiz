@@ -4,8 +4,7 @@
  * app - Angularモジュール本体
  ******************************************************************************/
 var appName = "myxQuizMain";
-var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate", "ngResource",
-	"ngTwitter" ]);
+var app = angular.module(appName, [ "ngStorage", "ui.bootstrap", "ngAnimate", "ngResource" ]);
 
 /*******************************************************************************
  * fileResource - 全てのjsonファイルの読込の同期をとるためのfactory
@@ -26,9 +25,10 @@ app.factory('fileResource', function($resource) {
   // keyboard.json - キーボード入力の定義
   , $resource('../../json/keyboard.json')
   // property.json - クイズのルールの中で、可変な値の設定(共通、ラウンド毎に設定がないプロパティを補完)
-  , $resource('../../json/property.json') ];
+  , $resource('../../json/property.json')
+  // tweet.json - ツイートの雛型
+  , $resource('../../json/tweet.json') ];
 });
-
 
 /*******************************************************************************
  * main - メインコントローラ
@@ -36,8 +36,7 @@ app.factory('fileResource', function($resource) {
  * @class
  * @name main
  ******************************************************************************/
-app
-.config([ "$locationProvider", function($locationProvider) {
+app.config([ "$locationProvider", function($locationProvider) {
   $locationProvider.html5Mode({
 	enabled : true,
 	requireBase : false
@@ -137,7 +136,7 @@ app
 		  $scope.getRankColorCSS = qCommon.getRankColorCSS;
 
 		  /* viewMode - 表示モードの判定 */
-		  $scope.viewMode = qCommon.viewMode;
+		  $scope.viewMode = qCommon.viewMode();
 
 		  /* addPlayer - プレイヤー追加 */
 		  $scope.addPlayer = function(index) {
@@ -200,6 +199,12 @@ app
 			  }
 			});
 
+			// tweetのひな型
+			$scope.property.tweet = {};
+			$scope.property.tweet = strs[7][0];
+			round.setTweet($scope.property.tweet);
+			console.log($scope.property.tweet)
+
 			$scope.timer = {};
 			$scope.selectPlayer = {};
 
@@ -229,6 +234,8 @@ app
 				// ファイルが存在しない場合
 				// ヘッダ部分の初期化
 				initCurrent.header = qCommon.getDefaultHeader($scope.defaultHeader);
+				// tweetsリストを追加
+				initCurrent.header.tweets = [];
 				// プレイヤー部分の初期化
 				initCurrent.players = qCommon.initPlayers(strs[3], $scope.items);
 				qCommon.refreshCurrent(initCurrent, $scope);

@@ -18,6 +18,7 @@ app
   $scope.rounds = qFile.rounds;
   $scope.initialize = qFile.initialize;
   $scope.twitterWindowOpen = qFile.twitterWindowOpen;
+  $scope.openFolder = qFile.openFolder;
   
   $scope.openNameList = function() {
 	qFile.openNameList($scope);
