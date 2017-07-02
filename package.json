@@ -4,12 +4,11 @@
 	"description": "",
 	"node-main": "main.js",
 	"main": "main.js",
-	"author":"Ryoh MIYAMOTO",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
-	"author": "",
+	"author":"Ryoh MIYAMOTO",
 	"license": "ISC",
 	"dependencies": {
 		"xlsx": "0.10.3"
