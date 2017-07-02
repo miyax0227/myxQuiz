@@ -7,6 +7,14 @@
 		"key": "name",
 		"style": "string",
 		"profile": true,
+		"anonymous": false,
+		"css": "name",
+		"vtrans": 3.7
+	}, {
+		"key": "handleName",
+		"style": "string",
+		"profile": true,
+		"anonymous": true,
 		"css": "name",
 		"vtrans": 3.7
 	}, {

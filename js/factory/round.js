@@ -6,7 +6,7 @@ var app = angular.module(appName);
 /*******************************************************************************
  * round - ラウンド特有のクイズのルール・画面操作の設定
  ******************************************************************************/
-app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
+app.factory('round', [ 'qCommon', 'rule', '$filter', function(qCommon, rule, $filter) {
 
   var round = {};
   var win = qCommon.win;
@@ -168,6 +168,57 @@ app.factory('round', [ 'qCommon', 'rule', function(qCommon, rule) {
 	},
 	action : function(scope) {
 	  qCommon.editCurrent(scope);
+	}
+  },
+  /*****************************************************************************
+   * スクリーンショット
+   ****************************************************************************/
+  {
+	name : "ss",
+	button_css : "btn btn-primary",
+	group : "basic",
+	keyboard : "Esc",
+	enable : function(scope) {
+	  return !scope.capturing;
+	},
+	action : function(scope) {
+	  // キャプチャ中
+	  scope.capturing = true;
+
+	  var fs = require('fs');
+	  var BrowserWindow = require('electron').remote.BrowserWindow;
+
+	  // キャプチャ用ウィンドウを生成
+	  var win = null;
+	  win = new BrowserWindow({
+		width : scope.captureWindowSize.width,
+		height : scope.captureWindowSize.height,
+		y : scope.captureWindowSize.top,
+		x : scope.captureWindowSize.left,
+		title : "Capture"
+	  });
+	  win.loadURL(__dirname + '/board.html?view=true&anonymous=true');
+	  // キャプチャ用ウィンドウの立ち上げ終了時にイベントを検知する
+	  win.webContents.on('did-finish-load', captureFunc);
+
+	  function dateString() {
+		return $filter('date')(new Date(), 'yyyyMMddHHmmss.sss');
+	  }
+
+	  function captureFunc() {
+		// 立ち上げ終了から2秒後に動作
+		setTimeout(function() {
+		  // キャプチャ実行
+		  win.capturePage(function(img) {
+			// png形式で保存
+			fs.writeFileSync(__dirname + "/../../twitter/" + dateString() + ".png", img.toPng());
+			// キャプチャ用ウィンドウを閉じる
+			win.close();
+			// キャプチャ終了
+			scope.capturing = false;
+		  });
+		}, 2000);
+	  }
 	}
   },
   /*****************************************************************************

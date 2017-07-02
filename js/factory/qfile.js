@@ -91,6 +91,11 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	});
   }, 1000);
 
+  /*****************************************************************************
+   * 履歴フォルダの初期化
+   * 
+   * @memberOf qFile
+   ****************************************************************************/
   function initialize() {
 	var oldFile = __dirname + '/history/current';
 	var newFile = __dirname + '/history/' + dateString();
@@ -98,6 +103,12 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	fs.mkdirSync(oldFile);
   }
 
+  /*****************************************************************************
+   * 名前リストを開く
+   * 
+   * @memberOf qFile
+   * @param {object} scope - $scope
+   ****************************************************************************/
   function openNameList(scope) {
 	Dialog.showOpenDialog(null, {
 	  properties : [ 'openFile' ],
@@ -162,7 +173,13 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	  scope.tableFilename = __dirname + "/history/current/nameList.json";
 	});
   }
-
+  
+  /*****************************************************************************
+   * 開いているリストをJSONファイルに保存する
+   * 
+   * @memberOf qFile
+   * @param {object} scope - $scope
+   ****************************************************************************/
   function saveJsonFile(scope) {
 	try {
 	  fs.statSync(scope.tableFilename);
@@ -177,6 +194,12 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	cancelJsonFile(scope);
   }
 
+  /*****************************************************************************
+   * 開いているリストを閉じる
+   * 
+   * @memberOf qFile
+   * @param {object} scope - $scope
+   ****************************************************************************/
   function cancelJsonFile(scope) {
 	scope.tableHead = null;
 	scope.tableContent = null;
@@ -184,15 +207,30 @@ app.service('qFile', [ '$window', '$interval', '$filter', function($window, $int
 	scope.tableFilename = null;
   }
 
+  /*****************************************************************************
+   * 日付のシリアル表現（yyyyMMddHHmmss）を返す
+   * 
+   * @memberOf qFile
+   ****************************************************************************/
   function dateString() {
 	return $filter('date')(new Date(), 'yyyyMMddHHmmss');
   }
 
+  /*****************************************************************************
+   * ツイート管理画面を開く
+   * 
+   * @memberOf qFile
+   ****************************************************************************/  
   function twitterWindowOpen() {
 	$window.open("./twitter.html", "Twitter", twitterWindowParameter);
   }
-  
-  function openFolder(){
+
+  /*****************************************************************************
+   * ワーク用のフォルダを開く
+   * 
+   * @memberOf qFile
+   ****************************************************************************/  
+  function openFolder() {
 	shell.openItem(__dirname);
   }
 

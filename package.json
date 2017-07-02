@@ -1,13 +1,17 @@
 {
-  "name": "myxQuiz",
-  "version": "0.0.1",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {"xlsx":"0.10.3" }
+	"name": "myxQuiz",
+	"version": "0.0.1",
+	"description": "",
+	"node-main": "main.js",
+	"main": "main.js",
+	"author":"Ryoh MIYAMOTO",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"xlsx": "0.10.3"
+	}
 }

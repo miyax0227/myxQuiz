@@ -49,6 +49,7 @@ app
 	  qCommonService.sortPlayer = sortPlayer;
 	  qCommonService.playoffoff = playoffoff;
 	  qCommonService.editTweet = editTweet;
+	  qCommonService.anonymousMode = anonymousMode;
 	  return qCommonService;
 
 	  /*************************************************************************
@@ -82,11 +83,16 @@ app
 	   * @param {object} scope - $scope
 	   ************************************************************************/
 	  function createHist(scope) {
+		var needToTweet = false;
+		if (scope.current.header.tweets.length > 0) {
+		  needToTweet = true;
+		}
+
 		// ツイート内容編集
 		var tweet = constructTweet(scope, scope.current.header.tweets);
 		// tweets初期化
 		scope.current.header.tweets = [];
-		
+
 		// historyの末尾にcurrentのコピーを追加
 		scope.history.push(angular.copy(scope.current));
 		// currentPageをhistoryの末尾に設定
@@ -99,13 +105,15 @@ app
 		  // ログ出力
 		  fs.writeFile(getHistoryFileName(), angular.toJson(scope.current));
 		  // ツイート出力
-		  fs.writeFile(getTweetFileName(), tweet);
+		  if (needToTweet) {
+			fs.writeFile(getTweetFileName(), tweet);
+		  }
 
 		} catch (e) {
 		  console.log('fs is not supported.');
 		}
 	  }
-	  
+
 	  /*************************************************************************
 	   * ツイート内容を最終的に編集する
 	   * 
@@ -126,11 +134,11 @@ app
 		tweet += tweets.join("\n");
 		tweet += "\n";
 		tweet += " - " + dateString();
-		
+
 		return tweet;
-		
+
 	  }
-	  
+
 	  /*************************************************************************
 	   * playerを追加する
 	   * 
@@ -419,6 +427,16 @@ app
 	   ************************************************************************/
 	  function viewMode() {
 		return $location.search()["view"] == "true";
+	  }
+
+	  /*************************************************************************
+	   * URLパラメータから匿名モードかどうか判定する
+	   * 
+	   * @memberOf qCommon
+	   * @return {boolean} 匿名モードの場合はtrue, それ以外はfalse
+	   ************************************************************************/
+	  function anonymousMode() {
+		return $location.search()["anonymous"] == "true";
 	  }
 
 	  /*************************************************************************
@@ -737,7 +755,7 @@ app
 	   ************************************************************************/
 	  function getTweetFileName() {
 		function dateString() {
-		  return $filter('date')(new Date(), 'yyyyMMddHHmmss');
+		  return $filter('date')(new Date(), 'yyyyMMddHHmmss.sss');
 		}
 
 		return __dirname + '/../../twitter/' + dateString() + "_" + getRoundName() + '.txt';

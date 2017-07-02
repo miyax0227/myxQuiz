@@ -115,6 +115,12 @@ app.config([ "$locationProvider", function($locationProvider) {
 		function($scope, $q, fileResource, qCommon, round) {
 		  /* Timer表示 */
 		  $scope.timerDisplay = "";
+		  
+		  /* 匿名状態　*/
+		  $scope.anonymous = qCommon.anonymousMode();
+		  
+		  /* スクリーンショットを撮っている最中か */
+		  $scope.capturing = false;
 
 		  /* keyDownイベントのハンドラ */
 		  $scope.keyDown = function(event) {
@@ -190,6 +196,9 @@ app.config([ "$locationProvider", function($locationProvider) {
 			$scope.windowSize = strs[4][0];
 			qCommon.resizeWindow($scope);
 			qCommon.adjustWindow($scope);
+			
+			// 画面キャプチャ用windowのサイズ
+			$scope.captureWindowSize = strs[4][4];
 
 			// プロパティ
 			$scope.property = strs[1][0];
