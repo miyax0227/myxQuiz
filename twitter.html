@@ -15,7 +15,7 @@
     <script src="js/factory/qtwitter.js"></script>
   </head>
 
-  <body ng-controller="twitter" style="overflow-x: hidden">
+  <body style="overflow-x: hidden" ng-controller="twitter">
     <div class="row small">
       <div class="col-xs-6">
         <table class="table table-condensed table-bordered table-hover">
@@ -71,7 +71,7 @@
         <tr ng-repeat="obj in history" ng-class="{danger:(obj.id==null)}" style="cursor: pointer" ng-click="setTweetId(obj.id)">
           <td>{{$index}}</td>
           <td>{{obj.owner}}</td>
-          <td><pre>{{obj.tweet}}</pre></td>
+          <td>          <pre>{{obj.tweet}}</pre></td>
           <td>{{obj.date}}</td>
           <td>
           <button class="btn btn-danger btn-xs" ng-click="deleteTweet(obj)" ng-if="obj.id">
@@ -80,5 +80,6 @@
         </tr>
       </tbody>
     </table>
+
   </body>
 </html>
